@@ -1,0 +1,64 @@
+<!-- ============================================================
+     IEI Student Chapter — Global Header
+     File: includes/header.html
+     Loaded into pages via JavaScript (static Vercel deploy).
+     ============================================================ -->
+<header class="site-header" role="banner">
+    <div class="container-iei">
+        <nav class="navbar navbar-iei d-flex align-items-center justify-content-between py-0"
+             aria-label="Primary navigation">
+
+            <!-- LEFT: Hamburger (opens sidebar) -->
+            <div class="d-flex align-items-center">
+                <button type="button"
+                        class="nav-toggle"
+                        id="sidebarToggle"
+                        data-sidebar-open
+                        aria-label="Open navigation menu"
+                        aria-controls="ieiSidebar"
+                        aria-expanded="false">
+                    <i class="bi bi-list" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <!-- CENTER: Branding -->
+            <a href="index.html" class="brand" aria-label="IEI Student Chapter — Home">
+                <img src="assets/images/logos/iei-logo.png"
+                     alt="Institution of Engineers (India) logo"
+                     class="brand-logo"
+                     width="44" height="44"
+                     loading="eager"
+                     decoding="async">
+                <span class="brand-text">
+                    <span class="brand-title">Institution of Engineers (India)</span>
+                    <span class="brand-subtitle">IEI Student Chapter</span>
+                </span>
+            </a>
+
+            <!-- RIGHT: Auth actions (UI-only placeholders) -->
+            <div class="d-flex align-items-center gap-2">
+                <!-- Desktop-only buttons -->
+                <a href="#" class="btn-iei-outline btn-iei-sm d-none d-sm-inline-flex"
+                   data-future-route="login"
+                   aria-label="Login (coming soon)">
+                    <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
+                    <span class="d-none d-md-inline">Login</span>
+                </a>
+                <a href="#" class="btn-iei btn-iei-sm d-none d-sm-inline-flex"
+                   data-future-route="signup"
+                   aria-label="Sign Up (coming soon)">
+                    <i class="bi bi-person-plus" aria-hidden="true"></i>
+                    <span class="d-none d-md-inline">Sign Up</span>
+                </a>
+
+                <!-- Mobile-only compact sign-in icon -->
+                <a href="#" class="btn-iei btn-icon d-inline-flex d-sm-none"
+                   data-future-route="login"
+                   aria-label="Login (coming soon)">
+                    <i class="bi bi-person" aria-hidden="true"></i>
+                </a>
+            </div>
+
+        </nav>
+    </div>
+</header>
