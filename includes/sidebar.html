@@ -1,0 +1,66 @@
+<!-- ============================================================
+     IEI Student Chapter — Off-canvas Sidebar
+     File: includes/sidebar.html
+     ============================================================ -->
+
+<!-- Overlay -->
+<div class="sidebar-overlay"
+     id="ieiSidebarOverlay"
+     data-sidebar-close
+     aria-hidden="true"></div>
+
+<!-- Sidebar panel -->
+<aside class="sidebar"
+       id="ieiSidebar"
+       role="navigation"
+       aria-label="Site navigation drawer"
+       aria-hidden="true"
+       inert>
+
+    <!-- Brand -->
+    <div class="sidebar-header">
+        <a href="index.html"
+           class="d-flex align-items-center gap-3 text-decoration-none">
+            <img src="assets/images/logos/iei-logo.png"
+                 alt="IEI logo"
+                 width="38" height="38"
+                 loading="lazy"
+                 decoding="async"
+                 class="flex-shrink-0"
+                 style="height:38px;width:auto;object-fit:contain;">
+            <span class="d-flex flex-column">
+                <span class="sidebar-brand-title">IEI Student Chapter</span>
+                <span class="sidebar-brand-sub">Institution of Engineers</span>
+            </span>
+        </a>
+
+        <button type="button"
+                class="sidebar-close flex-shrink-0"
+                data-sidebar-close
+                aria-label="Close navigation menu">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav" aria-label="Sidebar primary">
+        <ul>
+            <li><a href="index.html"><i class="bi bi-house-door" aria-hidden="true"></i><span>Home</span></a></li>
+            <li><a href="aboutUs.html"><i class="bi bi-info-circle" aria-hidden="true"></i><span>About Us</span></a></li>
+            <li><a href="projects.html"><i class="bi bi-diagram-3" aria-hidden="true"></i><span>Projects</span></a></li>
+            <li><a href="ContactUs.html"><i class="bi bi-envelope" aria-hidden="true"></i><span>Contact Us</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Footer meta -->
+    <div class="sidebar-footer">
+        <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-geo-alt text-iei" aria-hidden="true"></i>
+            <span>[College Name]</span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-envelope text-iei" aria-hidden="true"></i>
+            <span>[chapter-email@example.com]</span>
+        </div>
+    </div>
+</aside>
