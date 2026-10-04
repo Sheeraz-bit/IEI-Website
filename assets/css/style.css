@@ -1065,3 +1065,78 @@ body.sidebar-open { overflow: hidden; }
 .footer-social {
     margin-right: 0; /* was var(--space-2); flex gap on parent now handles it */
 }
+/* ------------------------------------------------------------
+   23. ENQUIRY FORM — Radio tiles (Contact page)
+   ------------------------------------------------------------ */
+.enquiry-option {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--surface-color);
+    cursor: pointer;
+    height: 100%;
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+.enquiry-option:hover {
+    border-color: var(--primary-border);
+    background-color: var(--primary-tint);
+}
+.enquiry-option:has(input:checked) {
+    border-color: var(--primary-color);
+    background-color: var(--primary-soft);
+    box-shadow: 0 0 0 3px rgba(0, 0, 139, 0.10);
+}
+.enquiry-option input[type="radio"] {
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.enquiry-option input[type="radio"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.enquiry-option input[type="radio"]:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+.enquiry-option-text {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    color: var(--text-color);
+    line-height: 1.4;
+}
+.enquiry-option-text i {
+    color: var(--primary-color);
+    font-size: 1.05rem;
+}
+
+/* Fallback for browsers without :has() support (older Safari) */
+@supports not selector(:has(*)) {
+    .enquiry-option input[type="radio"]:checked ~ .enquiry-option-text {
+        color: var(--primary-dark);
+        font-weight: var(--fw-semibold);
+    }
+}
+
+/* ------------------------------------------------------------
+   24. FORM VALIDATION STATE
+   ------------------------------------------------------------ */
+.form-iei .form-control.is-invalid,
+.form-iei .form-select.is-invalid {
+    border-color: var(--danger-color);
+    box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.10);
+}
+.form-iei .form-control.is-invalid:focus,
+.form-iei .form-select.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.18);
+}

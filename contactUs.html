@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact the IEI Student Chapter — enquiries, project collaboration, membership, and general information.">
+    <meta name="theme-color" content="#00008B">
+
+    <title>Contact Us — IEI Student Chapter</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon/favicon-96x96.png">
+    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="assets/images/favicon/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#00008B">
+    <meta name="msapplication-config" content="assets/images/favicon/browserconfig.xml">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Reusable components -->
+    <div data-include="includes/header.html"></div>
+    <div data-include="includes/sidebar.html"></div>
+
+    <main id="main-content" role="main">
+
+        <!-- Page hero -->
+        <section class="page-hero">
+            <div class="container-iei">
+                <nav aria-label="Breadcrumb" class="mb-3">
+                    <ol class="breadcrumb-iei">
+                        <li><a href="index.html">Home</a></li>
+                        <li aria-current="page">Contact Us</li>
+                    </ol>
+                </nav>
+                <span class="eyebrow" style="color:rgba(255,255,255,.85);">Get In Touch</span>
+                <h1>Let's Connect</h1>
+                <p>
+                    Have a question, project enquiry, collaboration idea,
+                    or want to work with our student teams? We're here to help.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact information cards -->
+        <section class="section-sm">
+            <div class="container-iei">
+                <div class="section-heading text-center">
+                    <span class="eyebrow">Reach Us</span>
+                    <h2>Contact Information</h2>
+                    <div class="divider"></div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card-iei text-center reveal">
+                            <div class="card-icon mx-auto">
+                                <i class="bi bi-envelope" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="card-title-iei h5">Email</h3>
+                            <p class="mb-0">
+                                <a href="mailto:iei.studentchapter@example.com"
+                                   class="link-iei">iei.studentchapter@example.com</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card-iei text-center reveal reveal-delay-1">
+                            <div class="card-icon mx-auto">
+                                <i class="bi bi-geo-alt" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="card-title-iei h5">Location</h3>
+                            <p class="mb-0">
+                                College Campus<br>
+                                Nanded, Maharashtra
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card-iei text-center reveal reveal-delay-2">
+                            <div class="card-icon mx-auto">
+                                <i class="bi bi-telephone" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="card-title-iei h5">Phone</h3>
+                            <p class="mb-0">
+                                <a href="tel:+910000000000" class="link-iei">+91 XXXXX XXXXX</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card-iei text-center reveal reveal-delay-3">
+                            <div class="card-icon mx-auto">
+                                <i class="bi bi-clock" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="card-title-iei h5">Chapter Hours</h3>
+                            <p class="mb-0">
+                                Monday – Friday<br>
+                                10 AM – 5 PM
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enquiry form -->
+        <section class="section">
+            <div class="container-iei">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10 col-xl-9">
+
+                        <div class="card-iei p-4 p-md-5">
+
+                            <div class="section-heading text-center mb-4">
+                                <span class="eyebrow">Enquiry Form</span>
+                                <h2>Send Us an Enquiry</h2>
+                                <div class="divider"></div>
+                                <p>Choose a topic below and we'll route your message to the right team.</p>
+                            </div>
+
+                            <!-- Live region for validation errors -->
+                            <div id="formAlert"
+                                 class="alert-iei alert-iei-danger mb-4 d-none"
+                                 role="alert"
+                                 aria-live="assertive">
+                                <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+                                <span id="formAlertMessage">Please review the form.</span>
+                            </div>
+
+                            <form id="contactForm" class="form-iei" novalidate>
+
+                                <!-- Enquiry type -->
+                                <fieldset class="mb-4">
+                                    <legend class="form-label h5 mb-3">
+                                        What would you like to contact us about?
+                                    </legend>
+
+                                    <div class="row g-2">
+                                        <!-- Each option is a proper radio tile -->
+                                        <div class="col-12 col-md-6">
+                                            <label class="enquiry-option">
+                                                <input type="radio" name="enquiry" value="hire" class="form-check-input">
+                                                <span class="enquiry-option-text">
+                                                    <i class="bi bi-people" aria-hidden="true"></i>
+                                                    Hire a Project Team
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="enquiry-option">
+                                                <input type="radio" name="enquiry" value="project" class="form-check-input">
+                                                <span class="enquiry-option-text">
+                                                    <i class="bi bi-diagram-3" aria-hidden="true"></i>
+                                                    Project Enquiry
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="enquiry-option">
+                                                <input type="radio" name="enquiry" value="student" class="form-check-input">
+                                                <span class="enquiry-option-text">
+                                                    <i class="bi bi-mortarboard" aria-hidden="true"></i>
+                                                    Student / Membership Enquiry
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="enquiry-option">
+                                                <input type="radio" name="enquiry" value="collaboration" class="form-check-input">
+                                                <span class="enquiry-option-text">
+                                                    <i class="bi bi-handshake" aria-hidden="true"></i>
+                                                    Collaboration
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="enquiry-option">
+                                                <input type="radio" name="enquiry" value="chapter" class="form-check-input">
+                                                <span class="enquiry-option-text">
+                                                    <i class="bi bi-info-circle" aria-hidden="true"></i>
+                                                    IEI Chapter Information
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="enquiry-option">
+                                                <input type="radio" name="enquiry" value="technical" class="form-check-input">
+                                                <span class="enquiry-option-text">
+                                                    <i class="bi bi-cpu" aria-hidden="true"></i>
+                                                    Technical Activity
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="enquiry-option">
+                                                <input type="radio" name="enquiry" value="general" class="form-check-input">
+                                                <span class="enquiry-option-text">
+                                                    <i class="bi bi-chat-dots" aria-hidden="true"></i>
+                                                    General Enquiry
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="enquiry-option">
+                                                <input type="radio" name="enquiry" value="other" class="form-check-input">
+                                                <span class="enquiry-option-text">
+                                                    <i class="bi bi-three-dots" aria-hidden="true"></i>
+                                                    Other
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <!-- Project selector (hire / project only) -->
+                                <div id="projectBox" class="mb-4 d-none">
+                                    <label for="project" class="form-label">Select Project</label>
+                                    <select class="form-select" id="project" name="project">
+                                        <option value="">— Select Project —</option>
+                                    </select>
+                                </div>
+
+                                <!-- Selected project info banner -->
+                                <div id="projectInfo"
+                                     class="alert-iei alert-iei-info mb-4 d-none"
+                                     aria-live="polite">
+                                    <i class="bi bi-info-circle" aria-hidden="true"></i>
+                                    <span>You are enquiring about: <strong id="projectName"></strong></span>
+                                </div>
+
+                                <!-- User information (shown once a type is selected) -->
+                                <div id="userBox" class="d-none">
+                                    <h3 class="h5 mb-3">Your Details</h3>
+                                    <div class="row g-3">
+                                        <div class="col-12 col-md-6">
+                                            <label for="name" class="form-label">Your Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                   autocomplete="name" required>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label for="organization" class="form-label">Organization / Company</label>
+                                            <input type="text" class="form-control" id="organization"
+                                                   name="organization" autocomplete="organization">
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                   autocomplete="email" required>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label for="phone" class="form-label">Phone</label>
+                                            <input type="tel" class="form-control" id="phone" name="phone"
+                                                   autocomplete="tel">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dynamic blocks -->
+                                <div id="block-hire" class="dynamic-block d-none mt-4">
+                                    <h3 class="h5 mb-3">Project Team Requirements</h3>
+                                    <div class="mb-3">
+                                        <label for="interest" class="form-label">What are you interested in? <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="interest" name="interest">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="requirement" class="form-label">Expected Requirement <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" id="requirement" name="requirement" rows="4"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="budget" class="form-label">Budget / Engagement Details</label>
+                                        <textarea class="form-control" id="budget" name="budget" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="contactMethod" class="form-label">Preferred Contact Method</label>
+                                        <select class="form-select" id="contactMethod" name="contactMethod">
+                                            <option value="email">Email</option>
+                                            <option value="phone">Phone</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="block-project" class="dynamic-block d-none mt-4">
+                                    <h3 class="h5 mb-3">Project Enquiry</h3>
+                                    <div class="mb-3">
+                                        <label for="question" class="form-label">Your Question <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" id="question" name="question" rows="5"></textarea>
+                                    </div>
+                                </div>
+
+                                <div id="block-general" class="dynamic-block d-none mt-4">
+                                    <h3 class="h5 mb-3">Message / Requirements</h3>
+                                    <div class="mb-3">
+                                        <label for="subject" class="form-label">Subject <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="subject" name="subject">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" id="message" name="message" rows="5"></textarea>
+                                    </div>
+                                </div>
+
+                                <div id="block-student" class="dynamic-block d-none mt-4">
+                                    <h3 class="h5 mb-3">Student / Membership Enquiry</h3>
+                                    <label for="studentMessage" class="form-label">Your Enquiry <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="studentMessage" name="studentMessage"
+                                              rows="5" placeholder="Tell us what you'd like to know"></textarea>
+                                </div>
+
+                                <div id="block-collaboration" class="dynamic-block d-none mt-4">
+                                    <h3 class="h5 mb-3">Collaboration</h3>
+                                    <label for="collaborationMessage" class="form-label">Your Idea <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="collaborationMessage"
+                                              name="collaborationMessage" rows="5"
+                                              placeholder="Tell us about your collaboration idea"></textarea>
+                                </div>
+
+                                <div id="block-chapter" class="dynamic-block d-none mt-4">
+                                    <h3 class="h5 mb-3">IEI Chapter Information</h3>
+                                    <label for="chapterMessage" class="form-label">Your Question <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="chapterMessage" name="chapterMessage"
+                                              rows="5" placeholder="Enter your question"></textarea>
+                                </div>
+
+                                <div id="block-technical" class="dynamic-block d-none mt-4">
+                                    <h3 class="h5 mb-3">Technical Activity</h3>
+                                    <label for="technicalMessage" class="form-label">Your Requirement <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="technicalMessage" name="technicalMessage"
+                                              rows="5" placeholder="Enter your requirement"></textarea>
+                                </div>
+
+                                <!-- Consent + submit (shown once type is chosen) -->
+                                <div id="consentBox" class="form-check mt-4 d-none">
+                                    <input type="checkbox" class="form-check-input" id="consent" name="consent" required>
+                                    <label class="form-check-label" for="consent">
+                                        I agree to be contacted regarding this enquiry.
+                                    </label>
+                                </div>
+
+                                <div id="submitBox" class="text-center mt-4 d-none">
+                                    <button type="submit" class="btn-iei btn-iei-lg">
+                                        <i class="bi bi-send" aria-hidden="true"></i>
+                                        Submit Enquiry
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- Success state -->
+                            <div id="success" class="text-center d-none" role="status" aria-live="polite">
+                                <div class="card-icon mx-auto mb-3" style="background:var(--success-soft);border-color:#cfe9db;color:var(--success-color);">
+                                    <i class="bi bi-check-lg" aria-hidden="true"></i>
+                                </div>
+                                <h2 class="h3">Enquiry Submitted</h2>
+                                <p class="lead-iei mb-2">
+                                    Thank you for contacting the IEI Student Chapter.
+                                    Your enquiry has been received.
+                                </p>
+                                <p class="mb-4">
+                                    Reference: <strong id="reference" class="text-iei"></strong>
+                                </p>
+                                <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                    <a href="index.html" class="btn-iei">
+                                        <i class="bi bi-house-door" aria-hidden="true"></i>
+                                        Back to Home
+                                    </a>
+                                    <button type="button" id="newEnquiry" class="btn-iei-outline">
+                                        <i class="bi bi-plus-lg" aria-hidden="true"></i>
+                                        New Enquiry
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div data-include="includes/footer.html"></div>
+
+    <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top">
+        <i class="bi bi-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="assets/js/script.js" defer></script>
+</body>
+</html>

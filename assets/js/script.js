@@ -362,3 +362,270 @@
 
   document.addEventListener("site:includes-loaded", init, { once: true });
 })();
+/* ============================================================
+   CONTACT US PAGE — Enquiry form behaviour
+   Loaded on every page but only activates if #contactForm exists.
+   ============================================================ */
+
+(() => {
+  "use strict";
+
+  /* --------------------------------------------------------
+     Sample projects (frontend placeholder — will come from
+     api/projects.php later). Keyed by project id.
+     -------------------------------------------------------- */
+  const SAMPLE_PROJECTS = {
+    "42": "Project XYZ",
+    "43": "College Website Development",
+    "44": "Smart Campus Application",
+    "45": "Women Safety Application"
+  };
+
+  /* --------------------------------------------------------
+     Enquiry types that require the project selector
+     -------------------------------------------------------- */
+  const TYPES_WITH_PROJECT = ["hire", "project"];
+
+  /* --------------------------------------------------------
+     Map enquiry value → block id shown
+     -------------------------------------------------------- */
+  const BLOCK_MAP = {
+    hire:          "block-hire",
+    project:       "block-project",
+    student:       "block-student",
+    collaboration: "block-collaboration",
+    chapter:       "block-chapter",
+    technical:     "block-technical",
+    general:       "block-general",
+    other:         "block-general"
+  };
+
+  /* --------------------------------------------------------
+     Required fields per enquiry type (id → human label)
+     -------------------------------------------------------- */
+  const REQUIRED_FIELDS = {
+    hire:          { interest: "Interest", requirement: "Requirement" },
+    project:       { question: "Your Question" },
+    student:       { studentMessage: "Your Enquiry" },
+    collaboration: { collaborationMessage: "Your Idea" },
+    chapter:       { chapterMessage: "Your Question" },
+    technical:     { technicalMessage: "Your Requirement" },
+    general:       { subject: "Subject", message: "Message" },
+    other:         { subject: "Subject", message: "Message" }
+  };
+
+  const initContactForm = () => {
+    const form = document.getElementById("contactForm");
+    if (!form) return;
+
+    const alertBox     = document.getElementById("formAlert");
+    const alertMsg     = document.getElementById("formAlertMessage");
+    const projectBox   = document.getElementById("projectBox");
+    const projectInfo  = document.getElementById("projectInfo");
+    const projectName  = document.getElementById("projectName");
+    const projectSel   = document.getElementById("project");
+    const userBox      = document.getElementById("userBox");
+    const consentBox   = document.getElementById("consentBox");
+    const submitBox    = document.getElementById("submitBox");
+    const successBox   = document.getElementById("success");
+    const referenceEl  = document.getElementById("reference");
+    const newEnquiryBtn= document.getElementById("newEnquiry");
+
+    /* Populate project dropdown */
+    if (projectSel) {
+      Object.entries(SAMPLE_PROJECTS).forEach(([id, name]) => {
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = name;
+        projectSel.appendChild(opt);
+      });
+    }
+
+    /* --- Show / hide helpers --------------------------------- */
+    const show = (el) => el && el.classList.remove("d-none");
+    const hide = (el) => el && el.classList.add("d-none");
+    const setAlert = (msg) => {
+      if (!alertBox || !alertMsg) return;
+      if (msg) {
+        alertMsg.textContent = msg;
+        show(alertBox);
+      } else {
+        hide(alertBox);
+      }
+    };
+
+    const hideAllBlocks = () => {
+      Object.values(BLOCK_MAP).forEach((id) => hide(document.getElementById(id)));
+    };
+
+    const clearValidation = () => {
+      form.querySelectorAll(".is-invalid").forEach((el) =>
+        el.classList.remove("is-invalid")
+      );
+      setAlert(null);
+    };
+
+    /* --- Main show/hide logic per type ----------------------- */
+    const showForm = (type) => {
+      hideAllBlocks();
+      clearValidation();
+
+      // Always show user + consent + submit once a type is picked
+      show(userBox);
+      show(consentBox);
+      show(submitBox);
+
+      // Project selector only for hire / project
+      if (TYPES_WITH_PROJECT.includes(type)) {
+        show(projectBox);
+      } else {
+        hide(projectBox);
+        hide(projectInfo);
+      }
+
+      const blockId = BLOCK_MAP[type];
+      if (blockId) show(document.getElementById(blockId));
+    };
+
+    /* --- Read a URL query param ----------------------------- */
+    const params    = new URLSearchParams(window.location.search);
+    const projectId = params.get("project");
+    const source    = params.get("source");
+
+    /* Pre-select project from URL */
+    if (projectId && SAMPLE_PROJECTS[projectId] && projectSel) {
+      projectSel.value = projectId;
+      projectName.textContent = SAMPLE_PROJECTS[projectId];
+      show(projectInfo);
+    }
+
+    /* --- Radio change handler ------------------------------- */
+    form.querySelectorAll('input[name="enquiry"]').forEach((radio) => {
+      radio.addEventListener("change", (e) => showForm(e.target.value));
+    });
+
+    /* --- Project dropdown change ---------------------------- */
+    projectSel?.addEventListener("change", function () {
+      const id = this.value;
+      if (id && SAMPLE_PROJECTS[id]) {
+        projectName.textContent = SAMPLE_PROJECTS[id];
+        show(projectInfo);
+      } else {
+        hide(projectInfo);
+      }
+    });
+
+    /* --- Validation ----------------------------------------- */
+    const validate = () => {
+      const type = form.querySelector('input[name="enquiry"]:checked')?.value;
+      if (!type) {
+        setAlert("Please select an enquiry type.");
+        return { ok: false, focus: null };
+      }
+
+      // Check user details
+      const name  = document.getElementById("name");
+      const email = document.getElementById("email");
+      const consent = document.getElementById("consent");
+
+      const markInvalid = (el, msg) => {
+        el.classList.add("is-invalid");
+        setAlert(msg);
+        return el;
+      };
+
+      if (!name.value.trim()) return { ok: false, focus: markInvalid(name, "Please enter your name.") };
+      if (!email.value.trim()) return { ok: false, focus: markInvalid(email, "Please enter your email.") };
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()))
+        return { ok: false, focus: markInvalid(email, "Please enter a valid email address.") };
+
+      // Project required for hire/project
+      if (TYPES_WITH_PROJECT.includes(type) && projectSel && !projectSel.value) {
+        return { ok: false, focus: markInvalid(projectSel, "Please select a project.") };
+      }
+
+      // Type-specific required fields
+      const required = REQUIRED_FIELDS[type] || {};
+      for (const [id, label] of Object.entries(required)) {
+        const el = document.getElementById(id);
+        if (el && !el.value.trim()) {
+          return { ok: false, focus: markInvalid(el, `Please fill in: ${label}.`) };
+        }
+      }
+
+      // Consent
+      if (!consent.checked) {
+        setAlert("Please agree to be contacted.");
+        consent.focus();
+        return { ok: false, focus: consent };
+      }
+
+      setAlert(null);
+      return { ok: true };
+    };
+
+    /* --- Clear invalid state on input ----------------------- */
+    form.addEventListener("input", (e) => {
+      if (e.target.classList?.contains("is-invalid")) {
+        e.target.classList.remove("is-invalid");
+      }
+    });
+
+    /* --- Submit --------------------------------------------- */
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const { ok, focus } = validate();
+      if (!ok) {
+        focus?.focus();
+        return;
+      }
+
+      // Simulate submission (frontend-only for now)
+      const refNumber = String(Math.floor(10000 + Math.random() * 90000));
+      referenceEl.textContent = `#IEI-${new Date().getFullYear()}-${refNumber}`;
+
+      hide(form);
+      show(successBox);
+      successBox.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "center" });
+    });
+
+    /* --- Reset for "New Enquiry" ---------------------------- */
+    newEnquiryBtn?.addEventListener("click", () => {
+      form.reset();
+      hideAllBlocks();
+      hide(userBox);
+      hide(consentBox);
+      hide(submitBox);
+      hide(projectBox);
+      hide(projectInfo);
+      clearValidation();
+      show(form);
+      hide(successBox);
+      form.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
+    });
+
+    /* --- Auto-select type from URL (?source=hire) ----------- */
+    if (source) {
+      const radio = form.querySelector(`input[name="enquiry"][value="${source}"]`);
+      if (radio) {
+        radio.checked = true;
+        showForm(source);
+      }
+    }
+  };
+
+  const prefersReducedMotion = () =>
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* --------------------------------------------------------
+     Boot — after includes are loaded (so header/footer exist)
+     -------------------------------------------------------- */
+  const boot = () => initContactForm();
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot, { once: true });
+  } else {
+    boot();
+  }
+})();
