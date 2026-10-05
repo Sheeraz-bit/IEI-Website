@@ -1156,3 +1156,503 @@
     initProjectsPage();
   }
 })();
+
+/* ============================================================
+   PROJECT DETAILS PAGE — reads ?id=, renders case-study view
+   Activates only if #projectContent exists on the page.
+   Uses window.IEI_PROJECTS (shared with the Projects page).
+   ============================================================ */
+
+(() => {
+  "use strict";
+
+  /* --------------------------------------------------------
+     Helpers
+     -------------------------------------------------------- */
+  const qs = (sel, ctx = document) => ctx.querySelector(sel);
+  const escapeHtml = (str) =>
+    String(str ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+
+  const paraHtml = (text) =>
+    escapeHtml(text)
+      .split(/\n{2,}/)
+      .map((paragraph) => `<p>${paragraph.replace(/\n/g, "<br>")}</p>`)
+      .join("");
+
+  const initialsFor = (name) =>
+    String(name || "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((n) => n[0].toUpperCase())
+      .join("");
+
+  const formatDate = (iso) => {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+  };
+
+  /* --------------------------------------------------------
+     Fallback schema normalizer
+     Accepts two shapes:
+       a) The projects-page shape:  { developer: "Name", developerRole, image, ... }
+       b) The richer shape:         { developer: { name, role, photo, ... }, media: [...] }
+     Both end up rendering correctly without touching the data.
+     -------------------------------------------------------- */
+  const normalizeProject = (p) => {
+    const out = { ...p };
+
+    // Developer → always an object with a `.name`
+    if (typeof p.developer === "string") {
+      out.developer = {
+        name: p.developer,
+        role: p.developerRole || "",
+        department: "",
+        photo: "",
+        email: "",
+        phone: "",
+        github: p.githubUrl && p.githubUrl !== "#" ? p.githubUrl : "",
+        linkedin: "",
+        skills: []
+      };
+    } else if (p.developer && typeof p.developer === "object") {
+      out.developer = {
+        name: p.developer.name || "Student Developer",
+        role: p.developer.role || "",
+        department: p.developer.department || "",
+        photo: p.developer.photo || "",
+        email: p.developer.email || "",
+        phone: p.developer.phone || "",
+        github: p.developer.github || "",
+        linkedin: p.developer.linkedin || "",
+        skills: Array.isArray(p.developer.skills) ? p.developer.skills : []
+      };
+    } else {
+      out.developer = {
+        name: "Student Developer",
+        role: "",
+        department: "",
+        photo: "",
+        email: "",
+        phone: "",
+        github: "",
+        linkedin: "",
+        skills: []
+      };
+    }
+
+    // Media → always an array of { type, src, alt?, poster? }
+    if (!Array.isArray(out.media) || !out.media.length) {
+      out.media = [
+        {
+          type: "image",
+          src: p.image || "",
+          alt: `${p.title || "Project"} preview image`
+        }
+      ].filter((m) => m.src);
+    }
+
+    // Extended content blocks (optional)
+    out.problem   = p.problem   || "";
+    out.solution  = p.solution  || "";
+    out.features  = Array.isArray(p.features) ? p.features : [];
+    out.objective = p.objective || "";
+
+    // Status (optional)
+    out.status = p.status || "";
+
+    return out;
+  };
+
+  /* --------------------------------------------------------
+     Main
+     -------------------------------------------------------- */
+  const initProjectDetails = () => {
+    const contentSection = document.getElementById("projectContent");
+    const notFoundSection = document.getElementById("notFoundSection");
+    if (!contentSection) return; // Not on the details page.
+
+    const data = Array.isArray(window.IEI_PROJECTS) ? window.IEI_PROJECTS : [];
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    const raw = data.find((p) => p.id === id);
+    if (!raw) {
+      notFoundSection?.classList.remove("d-none");
+      return;
+    }
+    const project = normalizeProject(raw);
+    contentSection.classList.remove("d-none");
+
+    /* --------------------------------------------------
+       1. HERO
+       -------------------------------------------------- */
+    const heroCategory = qs("#heroCategory");
+    const heroTitle = qs("#heroTitle");
+    const heroShort = qs("#heroShortDescription");
+    const heroTags = qs("#heroTags");
+    const heroDev = qs("#heroDeveloper");
+    const bcCurrent = qs("#breadcrumbCurrent");
+
+    if (heroCategory) heroCategory.textContent = project.categoryLabel || project.category || "Project";
+    if (heroTitle)   heroTitle.textContent = project.title || "Project";
+    if (heroShort)   heroShort.textContent = project.shortDescription || "";
+    if (heroDev)     heroDev.textContent = project.developer.name;
+    if (bcCurrent)   bcCurrent.textContent = project.title || "Project";
+
+    if (heroTags) {
+      heroTags.innerHTML = (project.technologies || [])
+        .map((t) => `<li><span class="tech-tag" style="background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28);color:#fff;">${escapeHtml(t)}</span></li>`)
+        .join("");
+    }
+
+    /* Hire buttons */
+    const hireUrl = `ContactUs.html?project=${encodeURIComponent(project.id)}&source=hire`;
+    const heroHireBtn = qs("#heroHireBtn");
+    const ctaHireBtn = qs("#ctaHireBtn");
+    if (heroHireBtn) heroHireBtn.href = hireUrl;
+    if (ctaHireBtn)  ctaHireBtn.href  = hireUrl;
+
+    /* Document title */
+    document.title = `${project.title || "Project"} — IEI Student Chapter`;
+
+    /* --------------------------------------------------
+       2. MEDIA GALLERY
+       -------------------------------------------------- */
+    const mediaMain = qs("#mediaMain");
+    const mediaThumbs = qs("#mediaThumbs");
+    const mediaModalEl = document.getElementById("mediaModal");
+    const mediaModalBody = qs("#mediaModalBody");
+    const mediaModalLabel = qs("#mediaModalLabel");
+    const mediaModal = mediaModalEl && window.bootstrap
+      ? new window.bootstrap.Modal(mediaModalEl)
+      : null;
+
+    const renderMediaMain = (m) => {
+      if (!m || !m.src) {
+        mediaMain.innerHTML = `
+          <div class="d-flex flex-column align-items-center justify-content-center h-100 text-muted-iei">
+            <i class="bi bi-image" style="font-size:2rem;" aria-hidden="true"></i>
+            <p class="mb-0 mt-2">No media available</p>
+          </div>`;
+        return;
+      }
+      if (m.type === "video") {
+        mediaMain.innerHTML = `
+          <video controls preload="metadata" ${m.poster ? `poster="${escapeHtml(m.poster)}"` : ""}>
+            <source src="${escapeHtml(m.src)}">
+            Your browser does not support the video tag.
+          </video>`;
+      } else {
+        mediaMain.innerHTML = `
+          <button type="button" class="media-trigger"
+                  aria-label="Open image larger: ${escapeHtml(m.alt || "")}"
+                  data-media-index="${project.media.indexOf(m)}">
+            <img src="${escapeHtml(m.src)}" alt="${escapeHtml(m.alt || "")}" loading="lazy" decoding="async">
+          </button>`;
+      }
+    };
+
+    const renderMediaThumbs = () => {
+      if (!mediaThumbs) return;
+      if (project.media.length <= 1) {
+        mediaThumbs.innerHTML = "";
+        return;
+      }
+      mediaThumbs.innerHTML = project.media
+        .map((m, i) => {
+          const isActive = i === 0 ? "is-active" : "";
+          const poster = m.type === "video" ? (m.poster || m.src) : m.src;
+          const overlay = m.type === "video"
+            ? `<span class="media-thumb-type" aria-hidden="true"><i class="bi bi-play-circle-fill"></i></span>`
+            : "";
+          return `
+            <button type="button"
+              class="media-thumb ${isActive}"
+              aria-label="Show ${m.type} ${i + 1}"
+              data-media-index="${i}">
+              <img src="${escapeHtml(poster)}" alt="" loading="lazy" decoding="async">
+              ${overlay}
+            </button>`;
+        })
+        .join("");
+    };
+
+    const setActiveThumb = (index) => {
+      mediaThumbs?.querySelectorAll(".media-thumb").forEach((el) => {
+        el.classList.toggle("is-active", Number(el.dataset.mediaIndex) === index);
+      });
+    };
+
+    const openLightbox = (m) => {
+      if (!mediaModal || !mediaModalBody) return;
+      if (m.type === "video") {
+        mediaModalBody.innerHTML = `
+          <video controls preload="metadata" class="w-100" ${m.poster ? `poster="${escapeHtml(m.poster)}"` : ""}>
+            <source src="${escapeHtml(m.src)}">
+            Your browser does not support the video tag.
+          </video>`;
+        if (mediaModalLabel) mediaModalLabel.textContent = "Project Video";
+      } else {
+        mediaModalBody.innerHTML = `
+          <img src="${escapeHtml(m.src)}" alt="${escapeHtml(m.alt || "")}">`;
+        if (mediaModalLabel) mediaModalLabel.textContent = m.alt || "Project Image";
+      }
+      mediaModal.show();
+    };
+
+    /* Clear modal body when hidden to stop video playback */
+    mediaModalEl?.addEventListener("hidden.bs.modal", () => {
+      if (mediaModalBody) mediaModalBody.innerHTML = "";
+    });
+
+    /* Delegated: thumbs select; main image opens lightbox */
+    mediaThumbs?.addEventListener("click", (e) => {
+      const btn = e.target.closest(".media-thumb");
+      if (!btn) return;
+      const idx = Number(btn.dataset.mediaIndex);
+      const m = project.media[idx];
+      if (!m) return;
+      setActiveThumb(idx);
+      renderMediaMain(m);
+    });
+
+    mediaMain?.addEventListener("click", (e) => {
+      const btn = e.target.closest(".media-trigger");
+      if (!btn) return;
+      const idx = Number(btn.dataset.mediaIndex);
+      const m = project.media[idx];
+      if (m) openLightbox(m);
+    });
+
+    /* Initial paint */
+    renderMediaMain(project.media[0]);
+    renderMediaThumbs();
+
+    /* --------------------------------------------------
+       3. PROJECT SUMMARY
+       -------------------------------------------------- */
+    const summary = qs("#projectSummary");
+    if (summary) {
+      const rows = [];
+      const addRow = (label, value) => {
+        if (!value) return;
+        rows.push(`
+          <div class="summary-row">
+            <dt>${escapeHtml(label)}</dt>
+            <dd>${value}</dd>
+          </div>`);
+      };
+
+      addRow("Category", escapeHtml(project.categoryLabel || project.category || ""));
+      addRow(
+        "Technologies",
+        (project.technologies || []).map((t) => escapeHtml(t)).join(", ") || ""
+      );
+      addRow("Status", escapeHtml(project.status || ""));
+      addRow("Developer", escapeHtml(project.developer.name));
+      addRow("Department", escapeHtml(project.developer.department));
+      addRow("Published", escapeHtml(formatDate(project.createdAt)));
+
+      summary.innerHTML = rows.length
+        ? rows.join("")
+        : `<p class="mb-0 text-muted-iei">No additional details available.</p>`;
+    }
+
+    /* --------------------------------------------------
+       4. DESCRIPTION
+       -------------------------------------------------- */
+    const desc = qs("#projectDescription");
+    if (desc) {
+      const parts = [];
+
+      if (project.problem) {
+        parts.push(`<h3>The Problem</h3>${paraHtml(project.problem)}`);
+      }
+      if (project.solution) {
+        parts.push(`<h3>The Solution</h3>${paraHtml(project.solution)}`);
+      }
+      if (project.objective) {
+        parts.push(`<h3>Objective</h3>${paraHtml(project.objective)}`);
+      }
+      if (Array.isArray(project.features) && project.features.length) {
+        parts.push(
+          `<h3>Key Features</h3><ul>${project.features
+            .map((f) => `<li>${escapeHtml(f)}</li>`)
+            .join("")}</ul>`
+        );
+      }
+
+      // Fallback: long-form description if no structured blocks exist
+      if (!parts.length) {
+        const text = project.description || project.shortDescription || "";
+        parts.push(`<p>${escapeHtml(text)}</p>`);
+      }
+
+      desc.innerHTML = parts.join("");
+    }
+
+    /* --------------------------------------------------
+       5. DEVELOPER
+       -------------------------------------------------- */
+    const devSection = qs("#developerSection");
+    if (devSection) {
+      const d = project.developer;
+      const photoHtml = d.photo
+        ? `<span class="developer-photo"><img src="${escapeHtml(d.photo)}" alt="${escapeHtml(d.name)}"></span>`
+        : `<span class="developer-photo" aria-hidden="true">${escapeHtml(initialsFor(d.name))}</span>`;
+
+      const skillsHtml = (d.skills || []).length
+        ? `<ul class="developer-skills" aria-label="Skills">
+             ${d.skills.map((s) => `<li><span class="tech-tag">${escapeHtml(s)}</span></li>`).join("")}
+           </ul>`
+        : "";
+
+      const contactItems = [];
+      if (d.email) contactItems.push(`<li><a href="mailto:${escapeHtml(d.email)}"><i class="bi bi-envelope" aria-hidden="true"></i>Email</a></li>`);
+      if (d.phone) contactItems.push(`<li><a href="tel:${escapeHtml(d.phone)}"><i class="bi bi-telephone" aria-hidden="true"></i>Phone</a></li>`);
+      if (d.linkedin) contactItems.push(`<li><a href="${escapeHtml(d.linkedin)}" target="_blank" rel="noopener noreferrer"><i class="bi bi-linkedin" aria-hidden="true"></i>LinkedIn</a></li>`);
+      if (d.github) contactItems.push(`<li><a href="${escapeHtml(d.github)}" target="_blank" rel="noopener noreferrer"><i class="bi bi-github" aria-hidden="true"></i>GitHub</a></li>`);
+
+      const contactHtml = contactItems.length
+        ? `<ul class="developer-contact">${contactItems.join("")}</ul>`
+        : "";
+
+      devSection.innerHTML = `
+        <div class="col-12 col-lg-8">
+          <article class="developer-card">
+            <div class="developer-card-head">
+              ${photoHtml}
+              <div>
+                <h3 class="developer-name">${escapeHtml(d.name)}</h3>
+                ${d.role ? `<p class="developer-role">${escapeHtml(d.role)}</p>` : ""}
+                ${d.department ? `<p class="developer-department">${escapeHtml(d.department)}</p>` : ""}
+              </div>
+            </div>
+            ${skillsHtml}
+            ${contactHtml}
+          </article>
+        </div>`;
+    }
+
+    /* --------------------------------------------------
+       6. PROJECT LINKS
+       -------------------------------------------------- */
+    const links = qs("#projectLinks");
+    if (links) {
+      const btns = [];
+      if (project.liveUrl && project.liveUrl !== "#") {
+        btns.push(`
+          <a href="${escapeHtml(project.liveUrl)}"
+             class="btn-iei btn-iei-lg"
+             target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+            View Live Project
+          </a>`);
+      }
+      if (project.githubUrl && project.githubUrl !== "#") {
+        btns.push(`
+          <a href="${escapeHtml(project.githubUrl)}"
+             class="btn-iei-outline btn-iei-lg"
+             target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-github" aria-hidden="true"></i>
+            View Source Code
+          </a>`);
+      }
+      links.innerHTML = btns.length
+        ? btns.join("")
+        : ""; // hide empty container
+      if (!btns.length) links.classList.add("d-none");
+    }
+
+    /* --------------------------------------------------
+       7. RELATED PROJECTS
+       -------------------------------------------------- */
+    const related = qs("#relatedProjects");
+    if (related) {
+      const others = data.filter((p) => p.id !== project.id);
+      // Rank by shared category first, then by shared technologies.
+      const scored = others
+        .map((p) => {
+          let score = 0;
+          if (p.category === project.category) score += 3;
+          const sharedTech = (p.technologies || []).filter((t) =>
+            (project.technologies || []).includes(t)
+          ).length;
+          score += sharedTech;
+          return { p, score };
+        })
+        .filter((x) => x.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3)
+        .map((x) => x.p);
+
+      // Top up with most recent if not enough related by score.
+      if (scored.length < 3) {
+        const fill = others
+          .filter((p) => !scored.some((s) => s.id === p.id))
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 3 - scored.length);
+        scored.push(...fill);
+      }
+
+      if (!scored.length) {
+        related.innerHTML = `<div class="col-12"><p class="text-muted-iei mb-0">No other projects to show yet.</p></div>`;
+      } else {
+        related.innerHTML = scored.map(renderRelatedCard).join("");
+      }
+    }
+
+    function renderRelatedCard(p) {
+      const normalized = normalizeProject(p);
+      const tags = (normalized.technologies || [])
+        .slice(0, 3)
+        .map((t) => `<li><span class="tech-tag">${escapeHtml(t)}</span></li>`)
+        .join("");
+      const url = `projectDetails.html?id=${encodeURIComponent(normalized.id)}`;
+      const img = normalized.media[0]?.src || normalized.image || "";
+
+      return `
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="project-card h-100">
+            <div class="project-card-media">
+              ${img ? `<img src="${escapeHtml(img)}" alt="Preview of ${escapeHtml(normalized.title)}" loading="lazy" decoding="async">` : ""}
+              <span class="project-card-category">${escapeHtml(normalized.categoryLabel || normalized.category || "")}</span>
+            </div>
+            <div class="project-card-body">
+              <h3 class="project-card-title">
+                <a href="${url}">${escapeHtml(normalized.title)}</a>
+              </h3>
+              <p class="project-card-desc">${escapeHtml(normalized.shortDescription || "")}</p>
+              <ul class="project-card-tags" aria-label="Technologies used">${tags}</ul>
+              <div class="project-card-actions">
+                <a href="${url}" class="btn-iei btn-iei-sm">
+                  <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                  View Project
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>`;
+    }
+  };
+
+  /* --------------------------------------------------------
+     Boot
+     -------------------------------------------------------- */
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initProjectDetails, { once: true });
+  } else {
+    initProjectDetails();
+  }
+})();
