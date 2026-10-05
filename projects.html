@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore innovative projects built by students of the IEI Student Chapter, MGMCEN Nanded — web, AI/ML, IoT, robotics, and more.">
+    <meta name="theme-color" content="#00008B">
+
+    <title>Student Projects — IEI Student Chapter</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon/favicon-96x96.png">
+    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="assets/images/favicon/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#00008B">
+    <meta name="msapplication-config" content="assets/images/favicon/browserconfig.xml">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Reusable components -->
+    <div data-include="includes/header.html"></div>
+    <div data-include="includes/sidebar.html"></div>
+
+    <main id="main-content" role="main">
+
+        <!-- ============================================================
+             1. PAGE HERO
+             ============================================================ -->
+        <section class="page-hero page-hero-compact">
+            <div class="container-iei">
+                <nav aria-label="Breadcrumb" class="mb-3">
+                    <ol class="breadcrumb-iei">
+                        <li><a href="index.html">Home</a></li>
+                        <li aria-current="page">Projects</li>
+                    </ol>
+                </nav>
+                <span class="eyebrow" style="color:rgba(255,255,255,.85);">Portfolio</span>
+                <h1>Student Projects</h1>
+                <p>
+                    Explore innovative projects built by students of the IEI Student Chapter
+                    and discover the teams behind them.
+                </p>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             2. SEARCH / FILTER / SORT TOOLBAR
+             ============================================================ -->
+        <section class="section-sm">
+            <div class="container-iei">
+                <div class="project-toolbar">
+
+                    <!-- Search -->
+                    <div class="project-search">
+                        <label for="projectSearch" class="visually-hidden">Search projects</label>
+                        <i class="bi bi-search project-search-icon" aria-hidden="true"></i>
+                        <input type="search"
+                               id="projectSearch"
+                               class="form-control form-control-iei project-search-input"
+                               placeholder="Search projects, technologies, or developers..."
+                               autocomplete="off"
+                               aria-controls="projectGrid">
+                    </div>
+
+                    <!-- Filter & Sort -->
+                    <div class="project-toolbar-actions">
+                        <!-- Category filter (dropdown on desktop, offcanvas on mobile) -->
+                        <div class="dropdown d-none d-md-block">
+                            <button class="btn-iei-outline dropdown-toggle"
+                                    type="button"
+                                    id="categoryDropdown"
+                                    data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside"
+                                    aria-expanded="false">
+                                <i class="bi bi-funnel" aria-hidden="true"></i>
+                                <span>Filter</span>
+                            </button>
+                            <ul class="dropdown-menu project-dropdown" aria-labelledby="categoryDropdown">
+                                <li><h6 class="dropdown-header">Category</h6></li>
+                                <li><button class="dropdown-item is-active" type="button" data-category="all">All</button></li>
+                                <li><button class="dropdown-item" type="button" data-category="web">Web Development</button></li>
+                                <li><button class="dropdown-item" type="button" data-category="ai">AI / Machine Learning</button></li>
+                                <li><button class="dropdown-item" type="button" data-category="mobile">Mobile Development</button></li>
+                                <li><button class="dropdown-item" type="button" data-category="iot">IoT</button></li>
+                                <li><button class="dropdown-item" type="button" data-category="robotics">Robotics</button></li>
+                                <li><button class="dropdown-item" type="button" data-category="electronics">Electronics</button></li>
+                                <li><button class="dropdown-item" type="button" data-category="other">Other</button></li>
+                            </ul>
+                        </div>
+
+                        <!-- Mobile filter trigger -->
+                        <button class="btn-iei-outline d-md-none"
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#filterDrawer"
+                                aria-controls="filterDrawer">
+                            <i class="bi bi-funnel" aria-hidden="true"></i>
+                            <span>Filters</span>
+                        </button>
+
+                        <!-- Sort -->
+                        <div class="dropdown">
+                            <button class="btn-iei-outline dropdown-toggle"
+                                    type="button"
+                                    id="sortDropdown"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                <i class="bi bi-sort-down" aria-hidden="true"></i>
+                                <span class="d-none d-sm-inline">Sort</span>
+                            </button>
+                            <ul class="dropdown-menu project-dropdown" aria-labelledby="sortDropdown">
+                                <li><button class="dropdown-item is-active" type="button" data-sort="recommended">Recommended</button></li>
+                                <li><button class="dropdown-item" type="button" data-sort="newest">Newest</button></li>
+                                <li><button class="dropdown-item" type="button" data-sort="oldest">Oldest</button></li>
+                                <li><button class="dropdown-item" type="button" data-sort="az">A – Z</button></li>
+                                <li><button class="dropdown-item" type="button" data-sort="za">Z – A</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile filter offcanvas -->
+                <div class="offcanvas offcanvas-bottom project-filter-drawer"
+                     tabindex="-1"
+                     id="filterDrawer"
+                     aria-labelledby="filterDrawerLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="filterDrawerLabel">Filter by Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="d-flex flex-column gap-2">
+                            <button class="filter-chip is-active" type="button" data-category="all">All</button>
+                            <button class="filter-chip" type="button" data-category="web">Web Development</button>
+                            <button class="filter-chip" type="button" data-category="ai">AI / Machine Learning</button>
+                            <button class="filter-chip" type="button" data-category="mobile">Mobile Development</button>
+                            <button class="filter-chip" type="button" data-category="iot">IoT</button>
+                            <button class="filter-chip" type="button" data-category="robotics">Robotics</button>
+                            <button class="filter-chip" type="button" data-category="electronics">Electronics</button>
+                            <button class="filter-chip" type="button" data-category="other">Other</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active filters strip -->
+                <div id="activeFilters" class="active-filters d-none" aria-live="polite">
+                    <span class="active-filters-label">Active:</span>
+                    <div id="activeFilterChips" class="active-filters-chips"></div>
+                    <button type="button" id="clearAllFilters" class="btn-iei-ghost btn-iei-sm">
+                        <i class="bi bi-x-circle" aria-hidden="true"></i>
+                        Clear All
+                    </button>
+                </div>
+
+                <!-- Results info -->
+                <p id="resultsInfo" class="results-info" aria-live="polite">6 Projects</p>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             3. PROJECT GRID
+             ============================================================ -->
+        <section class="section pt-0">
+            <div class="container-iei">
+                <div id="projectGrid" class="row g-4" aria-live="polite"></div>
+
+                <!-- Empty state -->
+                <div id="emptyState" class="empty-state d-none">
+                    <div class="empty-state-icon">
+                        <i class="bi bi-search" aria-hidden="true"></i>
+                    </div>
+                    <h2 class="h4">No projects found</h2>
+                    <p class="text-muted-iei">Try changing your search or filters.</p>
+                    <button type="button" id="clearFiltersEmpty" class="btn-iei-outline">
+                        <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
+                        Clear Filters
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             4. BOTTOM CTA
+             ============================================================ -->
+        <section class="section-sm">
+            <div class="container-iei">
+                <div class="cta-band reveal">
+                    <div class="cta-band-content">
+                        <span class="eyebrow" style="color:rgba(255,255,255,.85);">Collaborate</span>
+                        <h2>Have an idea or need a project team?</h2>
+                        <p>Reach out to the IEI Student Chapter and let's build something together.</p>
+                    </div>
+                    <div class="cta-band-actions">
+                        <a href="ContactUs.html" class="btn-iei">
+                            <i class="bi bi-send" aria-hidden="true"></i>
+                            Get in Touch
+                        </a>
+                        <a href="aboutUs.html" class="btn-iei-outline">
+                            <i class="bi bi-info-circle" aria-hidden="true"></i>
+                            About the Chapter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div data-include="includes/footer.html"></div>
+
+    <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top">
+        <i class="bi bi-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="assets/js/script.js" defer></script>
+</body>
+</html>
