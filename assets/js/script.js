@@ -2057,3 +2057,208 @@
     initAboutPage();
   }
 })();
+
+/* ============================================================
+   HOME PAGE — Featured projects grid + stat counters
+   Activates only if #homeProjectsGrid exists.
+   Consumes window.IEI_PROJECTS (shared with projects.html).
+   ============================================================ */
+
+(() => {
+  "use strict";
+
+  const escapeHtml = (str) =>
+    String(str ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+
+  const initialsFor = (name) =>
+    String(name || "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((n) => n[0].toUpperCase())
+      .join("");
+
+  const developerName = (p) =>
+    typeof p.developer === "string" ? p.developer : p.developer?.name || "";
+
+  const developerRole = (p) =>
+    p.developerRole ||
+    (typeof p.developer === "object" ? p.developer?.role : "") ||
+    "";
+
+  const FEATURED_COUNT = 6;
+
+  const renderCard = (p, i) => {
+    const tags = (p.technologies || [])
+      .slice(0, 3)
+      .map((t) => `<li><span class="tech-tag">${escapeHtml(t)}</span></li>`)
+      .join("");
+
+    const viewUrl = `projectDetails.html?id=${encodeURIComponent(p.id)}`;
+    const hireUrl = `ContactUs.html?project=${encodeURIComponent(p.id)}&source=hire`;
+    const img = p.image || (p.media && p.media[0]?.src) || "";
+
+    return `
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="home-project-card reveal reveal-delay-${i % 3}">
+          <div class="home-project-media">
+            ${img
+              ? `<img src="${escapeHtml(img)}"
+                      alt="Preview of ${escapeHtml(p.title)}"
+                      loading="lazy" decoding="async">`
+              : ``}
+            <span class="home-project-cat">${escapeHtml(p.categoryLabel || p.category || "Project")}</span>
+          </div>
+
+          <div class="home-project-body">
+            <h3 class="home-project-title">${escapeHtml(p.title)}</h3>
+            <p class="home-project-desc">${escapeHtml(p.shortDescription || "")}</p>
+
+            <ul class="home-project-tags" aria-label="Technologies used">${tags}</ul>
+
+            <div class="home-project-dev">
+              <span class="home-project-avatar" aria-hidden="true">${escapeHtml(initialsFor(developerName(p)))}</span>
+              <div>
+                <p class="home-project-dev-name">${escapeHtml(developerName(p))}</p>
+                <p class="home-project-dev-role">${escapeHtml(developerRole(p))}</p>
+              </div>
+            </div>
+
+            <div class="home-project-actions">
+              <a href="${viewUrl}" class="btn-iei btn-iei-sm">
+                <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                View Project
+              </a>
+              <a href="${hireUrl}" class="btn-iei-outline btn-iei-sm">
+                <i class="bi bi-briefcase" aria-hidden="true"></i>
+                Hire Team
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>`;
+  };
+
+  const renderHomeProjects = () => {
+    const grid = document.getElementById("homeProjectsGrid");
+    if (!grid) return;
+
+    const data = Array.isArray(window.IEI_PROJECTS) ? window.IEI_PROJECTS : [];
+
+    if (!data.length) {
+      grid.innerHTML = `
+        <div class="col-12">
+          <p class="text-muted-iei text-center mb-0">
+            <i class="bi bi-info-circle" aria-hidden="true"></i>
+            Featured projects will be published here soon.
+          </p>
+        </div>`;
+      return;
+    }
+
+    const featured = data.slice(0, FEATURED_COUNT);
+    grid.innerHTML = featured.map(renderCard).join("");
+
+    // Re-observe dynamically-added reveal items
+    document.dispatchEvent(new Event("home:render"));
+  };
+
+  /* ---- Animated stat counters ---- */
+  const initHomeCounters = () => {
+    const counters = document.querySelectorAll(".home-stat [data-count]");
+    if (!counters.length) return;
+
+    const prefersReduced =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const runCounter = (el) => {
+      const target = parseInt(el.getAttribute("data-count"), 10);
+      if (!Number.isFinite(target)) return;
+
+      if (prefersReduced) {
+        el.textContent = String(target);
+        return;
+      }
+
+      const duration = 1200;
+      const start = performance.now();
+      const step = (now) => {
+        const t = Math.min(1, (now - start) / duration);
+        // ease-out cubic
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = String(Math.round(target * eased));
+        if (t < 1) requestAnimationFrame(step);
+        else el.textContent = String(target);
+      };
+      requestAnimationFrame(step);
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      counters.forEach(runCounter);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            runCounter(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    counters.forEach((el) => observer.observe(el));
+  };
+
+  /* ---- Local reveal observer for dynamically injected items ---- */
+  const reobserveReveals = () => {
+    const nodes = document.querySelectorAll(".reveal:not(.is-visible)");
+    if (!nodes.length) return;
+
+    const prefersReduced =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReduced || !("IntersectionObserver" in window)) {
+      nodes.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+    );
+
+    nodes.forEach((el) => observer.observe(el));
+  };
+
+  const initHomePage = () => {
+    if (!document.getElementById("homeProjectsGrid")) return;
+
+    renderHomeProjects();
+    initHomeCounters();
+    reobserveReveals();
+
+    document.addEventListener("home:render", reobserveReveals);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHomePage, { once: true });
+  } else {
+    initHomePage();
+  }
+})();
