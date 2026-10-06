@@ -1656,3 +1656,404 @@
     initProjectDetails();
   }
 })();
+
+/* ============================================================
+   ABOUT US PAGE — static data + rendering
+   Activates only if #aboutEventsGrid / #aboutTimeline / #councilGrid exist.
+   ------------------------------------------------------------
+   All data lives here in clearly-labeled arrays so it can later
+   be replaced by backend data with minimal changes.
+   ============================================================ */
+
+(() => {
+  "use strict";
+
+  /* --------------------------------------------------------
+     Helper
+     -------------------------------------------------------- */
+  const qs = (sel, ctx = document) => ctx.querySelector(sel);
+  const escapeHtml = (str) =>
+    String(str ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+
+  const initialsFor = (name) =>
+    String(name || "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((n) => n[0].toUpperCase())
+      .join("");
+
+  /* ============================================================
+     SECTION 4 — EVENTS DATA (placeholder-friendly)
+     ============================================================ */
+  const ABOUT_EVENTS = [
+    {
+      id: "evt-1",
+      title: "HackSpectra 2.0 — Metaverse: Code Beyond Reality",
+      category: "Hackathon",
+      date: "April 2026",
+      description:
+        "A 24-hour national-level hackathon organised with the Department of CSE & AIML and GDG, where teams built real-world solutions under a strict time window.",
+      image: "assets/images/events/hackspectra.jpg",
+      href: "#"
+    },
+    {
+      id: "evt-2",
+      title: "Machine Learning to AI Agents",
+      category: "Expert Talk",
+      date: "October 2025",
+      description:
+        "An expert talk by Mr. Atul Kahate on the evolution of Machine Learning, AI agents, and intelligent systems — with real-world industry examples.",
+      image: "assets/images/events/ai-agents-talk.jpg",
+      href: "#"
+    },
+    {
+      id: "evt-3",
+      title: "Expert Lecture & Hands-On Workshop",
+      category: "Workshop",
+      date: "September 2026",
+      description:
+        "A hands-on session by Mr. Mukesh Jain (Capgemini) covering data, analytics, preprocessing, model deployment, and the practical aspects of AI/ML.",
+      image: "assets/images/events/hands-on-workshop.jpg",
+      href: "#"
+    },
+    {
+      id: "evt-4",
+      title: "Inauguration of IEI Students' Chapter",
+      category: "Chapter Milestone",
+      date: "October 2025",
+      description:
+        "Formal inauguration of the IEI Students' Chapter at the Department of CSE — combined with Engineer's Day Celebration and a Digital Poster Making Competition.",
+      image: "assets/images/events/chapter-inauguration.jpg",
+      href: "#"
+    },
+    {
+      id: "evt-5",
+      title: "Inspiring Journey of India's Defence Preparedness",
+      category: "Expert Lecture",
+      date: "March 2026",
+      description:
+        "An expert lecture by DRDO scientist Shri Kashinath Devdhar on India's defence technology journey, indigenous systems, and self-reliance.",
+      image: "assets/images/events/defence-lecture.jpg",
+      href: "#"
+    },
+    {
+      id: "evt-6",
+      title: "Building Agentic AI Applications from Scratch",
+      category: "Technical Session",
+      date: "November 2025",
+      description:
+        "A one-day workshop on AI fundamentals, agentic architectures, and building real AI applications — with industry experts from Infinera and IIT Bombay.",
+      image: "assets/images/events/agentic-ai.jpg",
+      href: "#"
+    }
+  ];
+
+  /* ============================================================
+     SECTION 6 — TIMELINE DATA
+     ============================================================ */
+  const ABOUT_TIMELINE = [
+    {
+      year: "2025",
+      title: "IEI Students' Chapter Inaugurated",
+      description:
+        "The IEI Students' Chapter was formally inaugurated in the Department of Computer Science and Engineering.",
+      category: "Milestone"
+    },
+    {
+      year: "2025",
+      title: "Machine Learning to AI Agents",
+      description:
+        "Expert talk by Mr. Atul Kahate introducing students to modern AI and agent-based systems.",
+      category: "Expert Talk"
+    },
+    {
+      year: "2025",
+      title: "Building Agentic AI Applications",
+      description:
+        "One-day workshop on AI fundamentals, agentic architecture, and industry applications.",
+      category: "Workshop"
+    },
+    {
+      year: "2026",
+      title: "Inspiring Journey of India's Defence Preparedness",
+      description:
+        "Expert lecture by DRDO scientist Shri Kashinath Devdare on India's indigenous defence technology.",
+      category: "Expert Lecture"
+    },
+    {
+      year: "2026",
+      title: "HackSpectra 2.0 — Metaverse: Code Beyond Reality",
+      description:
+        "A 24-hour national-level hackathon in association with the Department of CSE & AIML and GDG.",
+      category: "Hackathon"
+    },
+    {
+      year: "2026",
+      title: "Expert Lecture & Hands-On Workshop",
+      description:
+        "Session by Mr. Mukesh Jain (Capgemini) on data, analytics, and modern AI/ML practice.",
+      category: "Workshop"
+    }
+  ];
+
+  /* ============================================================
+     SECTION 9 — STUDENT COUNCIL DATA
+     ============================================================ */
+  const COUNCIL_MEMBERS = [
+    { name: "Vaishnavi Titare",       role: "President I",         cls: "B.Tech CSE-B", group: "leadership", rank: 1 },
+    { name: "Sushrut Deshpande",      role: "President II",        cls: "TY CSE-A",     group: "leadership", rank: 2 },
+    { name: "Pranjal Shahane",        role: "Vice-President I",    cls: "B.Tech CSE-B", group: "leadership", rank: 1 },
+    { name: "Shruti Daware",          role: "Vice-President II",   cls: "TY CSE-A",     group: "leadership", rank: 2 },
+    { name: "Shravani Wattamwar",     role: "Vice-President III",  cls: "TY CSE-C",     group: "leadership", rank: 3 },
+    { name: "Sukhada Ujlambkar",      role: "Secretary I",         cls: "TY AIML",      group: "leadership", rank: 1 },
+    { name: "Vedant Telang",          role: "Secretary II",        cls: "TY CSE-C",     group: "leadership", rank: 2 },
+    { name: "Sayali Parkhi",          role: "Secretary III",       cls: "TY CSE-B",     group: "leadership", rank: 3 },
+    { name: "Yogesh Tehare",          role: "Joint Secretary I",   cls: "TY CSE-C",     group: "leadership", rank: 1 },
+    { name: "Yashvi Nathani",         role: "Joint Secretary II",  cls: "SY CSE-C",     group: "leadership", rank: 2 },
+    { name: "Shaikh Abdul Nabi Sheeraz",role: "Joint Secretary III", cls: "SY AIML",      group: "leadership", rank: 3 },
+    { name: "Anushka Swami",          role: "Treasurer I",         cls: "TY CSE-C",     group: "leadership", rank: 1 },
+    { name: "Pranjali Shirpure",      role: "Treasurer II",        cls: "SY CSE-C",     group: "leadership", rank: 2 },
+    { name: "Shreyash Tekale",        role: "Treasurer III",       cls: "TY CSE-C",     group: "leadership", rank: 3 },
+    { name: "Tejas Holkar",           role: "Technical Head I",    cls: "TY AIML",      group: "technical",  rank: 1 },
+    { name: "Mohammedi Begum",        role: "Technical Head II",   cls: "SY CSE-C",     group: "technical",  rank: 2 },
+    { name: "Arjun Aher",             role: "Technical Head III",  cls: "SY CSE-A",     group: "technical",  rank: 3 },
+    { name: "Ayush Bagelikar",        role: "Media Head I",        cls: "TY AIML",      group: "media",      rank: 1 },
+    { name: "Atharv Fadanvis",        role: "Media Head II",       cls: "SY CSE-A",     group: "media",      rank: 2 },
+    { name: "Samiksha Baheti",        role: "Media Head III",      cls: "SY CSE-A",     group: "media",      rank: 3 },
+    { name: "Vanshika Mande",         role: "Media Head IV",       cls: "SY CSE-B",     group: "media",      rank: 4 },
+    { name: "Dilesha Dhole",          role: "Magazine Head I",     cls: "TY AIML",      group: "magazine",   rank: 1 },
+    { name: "Gajanan Kadam",          role: "Magazine Head II",    cls: "SY CSE-A",     group: "magazine",   rank: 2 },
+    { name: "Madhura Potdar",         role: "Board Member",        cls: "TY CSE-C",     group: "board" },
+    { name: "Sanjana Kachave",        role: "Board Member",        cls: "SY CSE-B",     group: "board" },
+    { name: "Shraddha Shinde",        role: "Board Member",        cls: "SY CSE-C",     group: "board" },
+    { name: "Swarup Shinde",          role: "Board Member",        cls: "SY CSE-C",     group: "board" },
+    { name: "Shaikh Ummekulsulm",     role: "Board Member",        cls: "SY CSE-C",     group: "board" },
+    { name: "Tanvi Kore",             role: "Board Member",        cls: "SY CSE-A",     group: "board" },
+    { name: "Mayur Shetkar",          role: "Board Member",        cls: "SY CSE-C",     group: "board" }
+  ];
+
+  /* ============================================================
+     RENDER — EVENTS GRID
+     ============================================================ */
+  const renderAboutEvents = () => {
+    const grid = document.getElementById("aboutEventsGrid");
+    if (!grid) return;
+    const empty = document.getElementById("aboutEventsEmpty");
+
+    if (!ABOUT_EVENTS.length) {
+      empty?.classList.remove("d-none");
+      return;
+    }
+
+    grid.innerHTML = ABOUT_EVENTS.map((e, i) => `
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="about-event-card reveal reveal-delay-${i % 4}">
+          <div class="about-event-media">
+            <img src="${escapeHtml(e.image)}"
+                 alt="Preview of ${escapeHtml(e.title)}"
+                 loading="lazy"
+                 decoding="async"
+                 onerror="this.style.display='none'">
+            <span class="about-event-cat">${escapeHtml(e.category)}</span>
+          </div>
+          <div class="about-event-body">
+            <h3 class="about-event-title">${escapeHtml(e.title)}</h3>
+            <p class="about-event-desc">${escapeHtml(e.description)}</p>
+            <div class="about-event-meta">
+              <span><i class="bi bi-calendar-event" aria-hidden="true"></i> ${escapeHtml(e.date)}</span>
+              <a href="${escapeHtml(e.href)}" class="link-iei" aria-label="View details for ${escapeHtml(e.title)}">
+                Details <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    `).join("");
+  };
+
+  /* ============================================================
+     RENDER — TIMELINE
+     ============================================================ */
+  const TIMELINE_VISIBLE_COUNT = 4;
+  let timelineExpanded = false;
+
+  const renderTimeline = () => {
+    const list = document.getElementById("aboutTimeline");
+    if (!list) return;
+    const toggle = document.getElementById("aboutTimelineToggle");
+
+    const visible = timelineExpanded
+      ? ABOUT_TIMELINE
+      : ABOUT_TIMELINE.slice(0, TIMELINE_VISIBLE_COUNT);
+
+    list.innerHTML = visible.map((item, i) => `
+      <li class="timeline-item reveal reveal-delay-${i % 4}">
+        <span class="timeline-node" aria-hidden="true"></span>
+        <div class="timeline-card">
+          <span class="timeline-year">${escapeHtml(item.year)}</span>
+          <h3 class="timeline-title">${escapeHtml(item.title)}</h3>
+          <p class="timeline-desc">${escapeHtml(item.description)}</p>
+          <span class="timeline-cat">
+            <i class="bi bi-tag" aria-hidden="true"></i> ${escapeHtml(item.category)}
+          </span>
+        </div>
+      </li>
+    `).join("");
+
+    if (toggle) {
+      if (ABOUT_TIMELINE.length <= TIMELINE_VISIBLE_COUNT) {
+        toggle.classList.add("d-none");
+      } else {
+        toggle.classList.remove("d-none");
+        toggle.setAttribute("aria-expanded", String(timelineExpanded));
+        toggle.innerHTML = timelineExpanded
+          ? `<i class="bi bi-chevron-up" aria-hidden="true"></i> Show Less`
+          : `<i class="bi bi-chevron-down" aria-hidden="true"></i> View More`;
+      }
+    }
+
+    // Re-run reveal observer so newly injected items animate in
+    document.dispatchEvent(new Event("about:render"));
+  };
+
+  /* ============================================================
+     RENDER — STUDENT COUNCIL
+     ============================================================ */
+  const FEATURED_ROLES = [
+    "President I",
+    "Vice-President I",
+    "Vice-President II",
+    "Secretary I"
+  ];
+
+  const renderCouncilFeatured = () => {
+    const container = document.getElementById("councilFeatured");
+    if (!container) return;
+
+    const featured = COUNCIL_MEMBERS.filter((m) =>
+      FEATURED_ROLES.includes(m.role)
+    );
+
+    container.innerHTML = featured.map((m) => `
+      <div class="featured-card reveal">
+        <div class="featured-card-photo" aria-hidden="true">${escapeHtml(initialsFor(m.name))}</div>
+        <span class="featured-card-role">${escapeHtml(m.role)}</span>
+        <h4>${escapeHtml(m.name)}</h4>
+        <p class="featured-card-class">${escapeHtml(m.cls)}</p>
+      </div>
+    `).join("");
+  };
+
+  let councilFilter = "all";
+
+  const renderCouncil = () => {
+    const grid = document.getElementById("councilGrid");
+    const empty = document.getElementById("councilEmpty");
+    if (!grid) return;
+
+    const filtered = councilFilter === "all"
+      ? COUNCIL_MEMBERS
+      : COUNCIL_MEMBERS.filter((m) => m.group === councilFilter);
+
+    if (!filtered.length) {
+      grid.innerHTML = "";
+      empty?.classList.remove("d-none");
+      return;
+    }
+    empty?.classList.add("d-none");
+
+    grid.innerHTML = filtered.map((m, i) => `
+      <div class="col-6 col-md-4 col-lg-3">
+        <article class="student-card reveal reveal-delay-${i % 4}">
+          <div class="student-photo" aria-hidden="true">${escapeHtml(initialsFor(m.name))}</div>
+          <p class="student-name">${escapeHtml(m.name)}</p>
+          <p class="student-role">${escapeHtml(m.role)}</p>
+          <p class="student-class">${escapeHtml(m.cls)}</p>
+        </article>
+      </div>
+    `).join("");
+
+    document.dispatchEvent(new Event("about:render"));
+  };
+
+  /* ============================================================
+     BOOT
+     ============================================================ */
+  const initAboutPage = () => {
+    const isAbout =
+      document.getElementById("aboutEventsGrid") ||
+      document.getElementById("aboutTimeline") ||
+      document.getElementById("councilGrid");
+    if (!isAbout) return;
+
+    /* Events */
+    renderAboutEvents();
+
+    /* Timeline + toggle */
+    renderTimeline();
+    document.getElementById("aboutTimelineToggle")?.addEventListener("click", () => {
+      timelineExpanded = !timelineExpanded;
+      renderTimeline();
+    });
+
+    /* Council */
+    renderCouncilFeatured();
+    renderCouncil();
+
+    /* Council filter tabs (delegated) */
+    document.querySelectorAll("[data-council-filter]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        councilFilter = btn.getAttribute("data-council-filter") || "all";
+        document.querySelectorAll("[data-council-filter]").forEach((b) => {
+          const active = b === btn;
+          b.classList.toggle("is-active", active);
+          b.setAttribute("aria-selected", String(active));
+        });
+        renderCouncil();
+      });
+    });
+
+    /* ---- Reusable reveal observer for dynamically-injected items ---- */
+    const reobserveReveals = () => {
+      const nodes = document.querySelectorAll(".reveal:not(.is-visible)");
+      if (!nodes.length) return;
+
+      const prefersReduced =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (prefersReduced || !("IntersectionObserver" in window)) {
+        nodes.forEach((el) => el.classList.add("is-visible"));
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+      );
+
+      nodes.forEach((el) => observer.observe(el));
+    };
+
+    document.addEventListener("about:render", reobserveReveals);
+    reobserveReveals();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAboutPage, { once: true });
+  } else {
+    initAboutPage();
+  }
+})();

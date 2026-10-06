@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About the IEI Student Chapter at MGM's College of Engineering, Nanded — activities, leadership, faculty, and student council.">
+    <meta name="theme-color" content="#00008B">
+    <title>About Us — IEI Student Chapter</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon/favicon-96x96.png">
+    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="assets/images/favicon/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#00008B">
+    <meta name="msapplication-config" content="assets/images/favicon/browserconfig.xml">
+
+    <!-- Fonts + Bootstrap + Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <div data-include="includes/header.html"></div>
+    <div data-include="includes/sidebar.html"></div>
+
+    <main id="main-content" role="main">
+
+        <!-- ============================================================
+             SECTION 1 — HERO / IEI AWARENESS CAROUSEL
+             ============================================================ -->
+        <section class="about-hero" aria-label="Introduction to IEI">
+            <div id="aboutHeroCarousel"
+                 class="carousel slide about-hero-carousel"
+                 data-bs-ride="carousel"
+                 data-bs-interval="6500"
+                 data-bs-pause="hover"
+                 data-bs-touch="true">
+
+                <!-- Indicators -->
+                <div class="carousel-indicators about-hero-indicators">
+                    <button type="button" data-bs-target="#aboutHeroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1 — Discover IEI"></button>
+                    <button type="button" data-bs-target="#aboutHeroCarousel" data-bs-slide-to="1" aria-label="Slide 2 — Connecting Engineering and Innovation"></button>
+                    <button type="button" data-bs-target="#aboutHeroCarousel" data-bs-slide-to="2" aria-label="Slide 3 — Learn. Build. Lead."></button>
+                    <button type="button" data-bs-target="#aboutHeroCarousel" data-bs-slide-to="3" aria-label="Slide 4 — IEI MGM Student Chapter"></button>
+                </div>
+
+                <div class="carousel-inner">
+
+                    <!-- Slide 1 -->
+                    <div class="carousel-item active about-hero-slide">
+                        <img src="assets/images/projects/smart-campus.jpg"
+                             alt=""
+                             class="about-hero-bg"
+                             loading="eager"
+                             decoding="async"
+                             aria-hidden="true">
+                        <div class="about-hero-overlay" aria-hidden="true"></div>
+                        <div class="container-iei about-hero-content">
+                            <div class="about-hero-text">
+                                <span class="eyebrow" style="color:rgba(255,255,255,.85);">Discover IEI</span>
+                                <h1>What is the Institution of Engineers (India)?</h1>
+                                <p>The Institution of Engineers (India) is a national professional body for engineers, dedicated to advancing engineering knowledge, professional practice, and technical excellence across the country.</p>
+                                <div class="about-hero-actions">
+                                    <a href="#about-intro" class="btn-iei btn-iei-lg">
+                                        <i class="bi bi-arrow-down-circle" aria-hidden="true"></i>
+                                        Explore IEI MGM
+                                    </a>
+                                    <a href="#about-events" class="btn-iei-outline btn-iei-lg">
+                                        <i class="bi bi-calendar-event" aria-hidden="true"></i>
+                                        View Activities
+                                    </a>
+                                    <a href="https://www.ieindia.org/"
+                                       class="btn-iei-outline btn-iei-lg"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+                                        Explore IEI India
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="carousel-item about-hero-slide">
+                        <img src="assets/images/projects/line-follower.jpg"
+                             alt=""
+                             class="about-hero-bg"
+                             loading="lazy"
+                             decoding="async"
+                             aria-hidden="true">
+                        <div class="about-hero-overlay" aria-hidden="true"></div>
+                        <div class="container-iei about-hero-content">
+                            <div class="about-hero-text">
+                                <span class="eyebrow" style="color:rgba(255,255,255,.85);">Connecting Engineering &amp; Innovation</span>
+                                <h1>Engineering Knowledge in Action</h1>
+                                <p>IEI promotes continuous professional development through technical activities, publications, and a nationwide community of engineers and student members.</p>
+                                <div class="about-hero-actions">
+                                    <a href="#about-objectives" class="btn-iei btn-iei-lg">
+                                        <i class="bi bi-lightbulb" aria-hidden="true"></i>
+                                        Why IEI?
+                                    </a>
+                                    <a href="#about-journey" class="btn-iei-outline btn-iei-lg">
+                                        <i class="bi bi-signpost-split" aria-hidden="true"></i>
+                                        Our Journey
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="carousel-item about-hero-slide">
+                        <img src="assets/images/projects/smart-water.jpg"
+                             alt=""
+                             class="about-hero-bg"
+                             loading="lazy"
+                             decoding="async"
+                             aria-hidden="true">
+                        <div class="about-hero-overlay" aria-hidden="true"></div>
+                        <div class="container-iei about-hero-content">
+                            <div class="about-hero-text">
+                                <span class="eyebrow" style="color:rgba(255,255,255,.85);">Learn. Build. Lead.</span>
+                                <h1>A Platform for Student Engineers</h1>
+                                <p>Student chapters give members hands-on exposure to technical events, workshops, seminars, projects, and a professional engineering community that begins in college.</p>
+                                <div class="about-hero-actions">
+                                    <a href="#about-events" class="btn-iei btn-iei-lg">
+                                        <i class="bi bi-easel" aria-hidden="true"></i>
+                                        Events &amp; Workshops
+                                    </a>
+                                    <a href="#about-council" class="btn-iei-outline btn-iei-lg">
+                                        <i class="bi bi-people" aria-hidden="true"></i>
+                                        Student Council
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4 -->
+                    <div class="carousel-item about-hero-slide">
+                        <img src="assets/images/projects/crop-health.jpg"
+                             alt=""
+                             class="about-hero-bg"
+                             loading="lazy"
+                             decoding="async"
+                             aria-hidden="true">
+                        <div class="about-hero-overlay" aria-hidden="true"></div>
+                        <div class="container-iei about-hero-content">
+                            <div class="about-hero-text">
+                                <span class="eyebrow" style="color:rgba(255,255,255,.85);">IEI MGM Student Chapter</span>
+                                <h1>Institution of Engineers (India) at MGM</h1>
+                                <p>The IEI Student Chapter at MGM's College of Engineering, Nanded connects students with a national engineering community — through workshops, expert lectures, hackathons, and technical initiatives.</p>
+                                <div class="about-hero-actions">
+                                    <a href="#about-leadership" class="btn-iei btn-iei-lg">
+                                        <i class="bi bi-person-badge" aria-hidden="true"></i>
+                                        Meet the Team
+                                    </a>
+                                    <a href="ContactUs.html" class="btn-iei-outline btn-iei-lg">
+                                        <i class="bi bi-envelope" aria-hidden="true"></i>
+                                        Contact IEI MGM
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev about-hero-control" type="button" data-bs-target="#aboutHeroCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous slide</span>
+                </button>
+                <button class="carousel-control-next about-hero-control" type="button" data-bs-target="#aboutHeroCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next slide</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 2 — ABOUT IEI MGM
+             ============================================================ -->
+        <section id="about-intro" class="section about-intro">
+            <div class="container-iei">
+                <div class="row g-5 align-items-center">
+                    <div class="col-12 col-lg-6 reveal">
+                        <span class="eyebrow">Institution of Engineers (India)</span>
+                        <h2>About IEI MGM</h2>
+                        <div class="divider-iei" style="width:56px;height:3px;background:var(--primary-color);border-radius:2px;margin-bottom:var(--space-4);"></div>
+
+                        <p class="lead-iei">
+                            The IEI Student Chapter at MGM's College of Engineering, Nanded
+                            is a student-led body affiliated with the Institution of Engineers (India).
+                        </p>
+                        <p>
+                            The chapter exists to bridge classroom learning with professional
+                            engineering practice. It gives students a structured platform to
+                            engage with technical activities, workshops, expert sessions, and
+                            project-based learning — while being part of a national engineering
+                            community.
+                        </p>
+                        <p class="mb-0">
+                            Through its activities, the chapter encourages collaboration,
+                            leadership, technical curiosity, and continuous professional
+                            development among student engineers.
+                        </p>
+                    </div>
+
+                    <div class="col-12 col-lg-6 reveal reveal-delay-1">
+                        <div class="about-intro-visual">
+                            <img src="https://www.ieindia.org/assets/images/menu-logo.png"
+                                 alt="Institution of Engineers (India) logo"
+                                 class="about-intro-logo"
+                                 loading="lazy"
+                                 decoding="async">
+                            <div class="about-intro-caption">
+                                <strong>IEI Student Chapter</strong>
+                                <span>MGM's College of Engineering, Nanded</span>
+                                <a href="https://www.ieindia.org/"
+                                   class="link-iei small"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
+                                    Source: The Institution of Engineers (India)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Highlight cards -->
+                <div class="row g-4 mt-4">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card-iei reveal">
+                            <div class="card-icon"><i class="bi bi-cpu" aria-hidden="true"></i></div>
+                            <h3 class="card-title-iei h5">Technical Exposure</h3>
+                            <p class="mb-0">Hands-on learning through technical sessions, demos, and project work.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card-iei reveal reveal-delay-1">
+                            <div class="card-icon"><i class="bi bi-easel" aria-hidden="true"></i></div>
+                            <h3 class="card-title-iei h5">Workshops &amp; Seminars</h3>
+                            <p class="mb-0">Regular sessions with faculty, industry professionals, and alumni.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card-iei reveal reveal-delay-2">
+                            <div class="card-icon"><i class="bi bi-award" aria-hidden="true"></i></div>
+                            <h3 class="card-title-iei h5">Professional Development</h3>
+                            <p class="mb-0">Opportunities aligned with the professional goals of engineering students.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card-iei reveal reveal-delay-3">
+                            <div class="card-icon"><i class="bi bi-people" aria-hidden="true"></i></div>
+                            <h3 class="card-title-iei h5">Student Collaboration</h3>
+                            <p class="mb-0">A community where students from different batches and branches work together.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 3 — WHY IEI
+             ============================================================ -->
+        <section id="about-objectives" class="section section-tint about-objectives">
+            <div class="container-iei">
+                <div class="section-heading text-center reveal">
+                    <span class="eyebrow">Objectives</span>
+                    <h2>Why IEI?</h2>
+                    <div class="divider"></div>
+                    <p>Six reasons why IEI membership matters to student engineers.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-iei reveal">
+                            <div class="card-icon"><i class="bi bi-book" aria-hidden="true"></i></div>
+                            <h3 class="card-title-iei h5">Technical Learning</h3>
+                            <p class="mb-0">Beyond the syllabus — sessions and workshops that build practical engineering understanding.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-iei reveal reveal-delay-1">
+                            <div class="card-icon"><i class="bi bi-building-gear" aria-hidden="true"></i></div>
+                            <h3 class="card-title-iei h5">Industry Exposure</h3>
+                            <p class="mb-0">Expert lectures and interactions that connect students to real-world engineering practice.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-iei reveal reveal-delay-2">
+                            <div class="card-icon"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i></div>
+                            <h3 class="card-title-iei h5">Professional Development</h3>
+                            <p class="mb-0">Early exposure to professional bodies, ethical practice, and engineering careers.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-iei reveal">
+                            <div class="card-icon"><i class="bi bi-lightbulb" aria-hidden="true"></i></div>
+                            <h3 class="card-title-iei h5">Innovation &amp; Projects</h3>
+                            <p class="mb-0">Encouragement to ideate, prototype, and build — individually and in teams.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-iei reveal reveal-delay-1">
+                            <div class="card-icon"><i class="bi bi-person-check" aria-hidden="true"></i></div>
+                            <h3 class="card-title-iei h5">Leadership</h3>
+                            <p class="mb-0">Opportunities to organise events, lead teams, and contribute to a student-run chapter.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-iei reveal reveal-delay-2">
+                            <div class="card-icon"><i class="bi bi-share" aria-hidden="true"></i></div>
+                            <h3 class="card-title-iei h5">Networking</h3>
+                            <p class="mb-0">Connect with students, faculty, and professionals across the IEI community.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 4 — EVENTS & WORKSHOPS
+             ============================================================ -->
+        <section id="about-events" class="section about-events">
+            <div class="container-iei">
+                <div class="section-heading reveal">
+                    <span class="eyebrow">Activities</span>
+                    <h2>Events &amp; Workshops</h2>
+                    <div class="divider"></div>
+                    <p>Technical activities conducted under the IEI MGM Student Chapter.</p>
+                </div>
+
+                <div id="aboutEventsGrid" class="row g-4" aria-live="polite"></div>
+
+                <!-- Placeholder note when data is empty -->
+                <p class="about-events-note text-muted-iei small mt-3 d-none" id="aboutEventsEmpty">
+                    <i class="bi bi-info-circle" aria-hidden="true"></i>
+                    More events will be added as they are conducted and documented.
+                </p>
+
+                <div class="text-center mt-4">
+                    <a href="projects.html" class="btn-iei-outline btn-iei-lg">
+                        <i class="bi bi-grid" aria-hidden="true"></i>
+                        View All Activities
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 5 — ACTIVITIES & INITIATIVES
+             ============================================================ -->
+        <section class="section section-tint about-initiatives">
+            <div class="container-iei">
+                <div class="section-heading text-center reveal">
+                    <span class="eyebrow">Initiatives</span>
+                    <h2>Activities &amp; Initiatives</h2>
+                    <div class="divider"></div>
+                    <p>Beyond individual events — the ongoing work of the chapter.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="initiative-item reveal">
+                            <div class="initiative-icon"><i class="bi bi-megaphone" aria-hidden="true"></i></div>
+                            <div>
+                                <h3 class="h5 mb-1">Technical Awareness</h3>
+                                <p class="mb-0">Helping students understand emerging technologies and career pathways.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="initiative-item reveal reveal-delay-1">
+                            <div class="initiative-icon"><i class="bi bi-person-hearts" aria-hidden="true"></i></div>
+                            <div>
+                                <h3 class="h5 mb-1">Student Engagement</h3>
+                                <p class="mb-0">Encouraging participation across batches, branches, and backgrounds.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="initiative-item reveal reveal-delay-2">
+                            <div class="initiative-icon"><i class="bi bi-diagram-3" aria-hidden="true"></i></div>
+                            <div>
+                                <h3 class="h5 mb-1">Engineering Projects</h3>
+                                <p class="mb-0">Supporting student-led project work and technical innovation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="initiative-item reveal">
+                            <div class="initiative-icon"><i class="bi bi-journal-text" aria-hidden="true"></i></div>
+                            <div>
+                                <h3 class="h5 mb-1">Knowledge Sharing</h3>
+                                <p class="mb-0">Peer learning, documentation, and sharing of technical knowledge.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="initiative-item reveal reveal-delay-1">
+                            <div class="initiative-icon"><i class="bi bi-briefcase" aria-hidden="true"></i></div>
+                            <div>
+                                <h3 class="h5 mb-1">Professional Development</h3>
+                                <p class="mb-0">Exposure to professional practice, ethics, and engineering careers.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="initiative-item reveal reveal-delay-2">
+                            <div class="initiative-icon"><i class="bi bi-globe2" aria-hidden="true"></i></div>
+                            <div>
+                                <h3 class="h5 mb-1">Community-Oriented Work</h3>
+                                <p class="mb-0">Initiatives that apply engineering thinking to societal needs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 6 — OUR JOURNEY (TIMELINE)
+             ============================================================ -->
+        <section id="about-journey" class="section about-journey">
+            <div class="container-iei">
+                <div class="section-heading text-center reveal">
+                    <span class="eyebrow">Milestones</span>
+                    <h2>Our Journey</h2>
+                    <div class="divider"></div>
+                    <p>Growing through learning, collaboration and engineering.</p>
+                </div>
+
+                <ol id="aboutTimeline" class="about-timeline" aria-label="IEI MGM timeline"></ol>
+
+                <div class="text-center mt-4">
+                    <button type="button"
+                            id="aboutTimelineToggle"
+                            class="btn-iei-outline btn-iei-lg d-none"
+                            aria-expanded="false"
+                            aria-controls="aboutTimeline">
+                        <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                        View More
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 7 — REPORTS & DOCUMENTATION
+             ============================================================ -->
+        <section class="section section-tint about-reports">
+            <div class="container-iei">
+                <div class="section-heading text-center reveal">
+                    <span class="eyebrow">Archive</span>
+                    <h2>Reports &amp; Documentation</h2>
+                    <div class="divider"></div>
+                    <p>Chapter reports, event documentation, and publications.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="report-card reveal">
+                            <div class="report-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></div>
+                            <h3 class="h5 mb-1">Annual Report</h3>
+                            <p class="text-muted-iei small mb-2">Academic Year — To be updated</p>
+                            <p class="mb-3">A consolidated summary of the chapter's activities for the academic year.</p>
+                            <a href="#" class="btn-iei-outline btn-iei-sm" data-future-route="annual-report">
+                                <i class="bi bi-download" aria-hidden="true"></i>
+                                View Report
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="report-card reveal reveal-delay-1">
+                            <div class="report-icon"><i class="bi bi-file-earmark-ruled" aria-hidden="true"></i></div>
+                            <h3 class="h5 mb-1">Event Reports</h3>
+                            <p class="text-muted-iei small mb-2">Coming Soon</p>
+                            <p class="mb-3">Detailed documentation of individual events conducted under the chapter.</p>
+                            <a href="#" class="btn-iei-outline btn-iei-sm" data-future-route="event-reports">
+                                <i class="bi bi-download" aria-hidden="true"></i>
+                                View Reports
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="report-card reveal reveal-delay-2">
+                            <div class="report-icon"><i class="bi bi-file-earmark-code" aria-hidden="true"></i></div>
+                            <h3 class="h5 mb-1">Technical Documentation</h3>
+                            <p class="text-muted-iei small mb-2">Coming Soon</p>
+                            <p class="mb-3">Technical guides, workshop notes, and reference material.</p>
+                            <a href="#" class="btn-iei-outline btn-iei-sm" data-future-route="tech-docs">
+                                <i class="bi bi-download" aria-hidden="true"></i>
+                                View Documents
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="report-card reveal">
+                            <div class="report-icon"><i class="bi bi-file-earmark-richtext" aria-hidden="true"></i></div>
+                            <h3 class="h5 mb-1">Chapter Publications</h3>
+                            <p class="text-muted-iei small mb-2">Coming Soon</p>
+                            <p class="mb-3">Student articles, magazine content, and editorial pieces.</p>
+                            <a href="#" class="btn-iei-outline btn-iei-sm" data-future-route="publications">
+                                <i class="bi bi-download" aria-hidden="true"></i>
+                                View Publications
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="report-card reveal reveal-delay-1">
+                            <div class="report-icon"><i class="bi bi-file-earmark-bar-graph" aria-hidden="true"></i></div>
+                            <h3 class="h5 mb-1">Activity Reports</h3>
+                            <p class="text-muted-iei small mb-2">Coming Soon</p>
+                            <p class="mb-3">Periodic reports covering the ongoing activities and initiatives.</p>
+                            <a href="#" class="btn-iei-outline btn-iei-sm" data-future-route="activity-reports">
+                                <i class="bi bi-download" aria-hidden="true"></i>
+                                View Reports
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="report-card reveal reveal-delay-2">
+                            <div class="report-icon"><i class="bi bi-folder2-open" aria-hidden="true"></i></div>
+                            <h3 class="h5 mb-1">All Documents</h3>
+                            <p class="text-muted-iei small mb-2">Coming Soon</p>
+                            <p class="mb-3">A single archive of every document released by the chapter.</p>
+                            <a href="#" class="btn-iei-outline btn-iei-sm" data-future-route="all-docs">
+                                <i class="bi bi-download" aria-hidden="true"></i>
+                                Browse Archive
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 8 — THE HANDS BEHIND IEI MGM
+             ============================================================ -->
+        <section id="about-leadership" class="section about-leadership">
+            <div class="container-iei">
+                <div class="section-heading text-center reveal">
+                    <span class="eyebrow">Leadership</span>
+                    <h2>The Hands Behind IEI MGM</h2>
+                    <div class="divider"></div>
+                    <p>Meet the people who guide, support and drive the chapter forward.</p>
+                </div>
+
+                <!-- 8A — Director -->
+                <div class="leadership-block reveal">
+                    <h3 class="leadership-block-title">
+                        <i class="bi bi-building" aria-hidden="true"></i>
+                        Institute Leadership
+                    </h3>
+
+                    <div class="profile-feature">
+                        <div class="profile-feature-media">
+                            <img src="https://mgmcen.ac.in/images/director-img.jpg"
+                                 alt="Dr. Geeta S. Lathkar, Director, MGM's College of Engineering"
+                                 loading="lazy"
+                                 decoding="async">
+                        </div>
+                        <div class="profile-feature-body">
+                            <span class="badge-iei mb-2">Director</span>
+                            <h4 class="h3 mb-1">Dr. Geeta S. Lathkar</h4>
+                            <p class="text-muted-iei mb-3">Director, MGM's College of Engineering, Nanded</p>
+                            <p>
+                                A long-standing academic leader associated with the institute
+                                for several decades, Dr. Lathkar's message emphasises engineering
+                                education, student personality development, professional growth,
+                                and preparing students for evolving technological and industry
+                                requirements.
+                            </p>
+                            <button type="button"
+                                    class="btn-iei-outline btn-iei-sm"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#directorMore"
+                                    aria-expanded="false"
+                                    aria-controls="directorMore">
+                                <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                                Read More
+                            </button>
+                            <div class="collapse mt-3" id="directorMore">
+                                <p class="mb-0">
+                                    Her leadership reflects a continuing focus on academic
+                                    quality, professional development of students, and
+                                    institutional improvement. Under her guidance, the
+                                    institute continues to strengthen its academic and
+                                    professional initiatives.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8B — HOD -->
+                <div class="leadership-block reveal">
+                    <h3 class="leadership-block-title">
+                        <i class="bi bi-mortarboard" aria-hidden="true"></i>
+                        Department Leadership
+                    </h3>
+
+                    <div class="profile-feature">
+                        <div class="profile-feature-media">
+                            <img src="https://mgmcen.ac.in/images/img-head-cse-p2.jpg"
+                                 alt="Dr. Archana M. Rajurkar, Head, Department of Computer Science and Engineering"
+                                 loading="lazy"
+                                 decoding="async">
+                        </div>
+                        <div class="profile-feature-body">
+                            <span class="badge-iei mb-2">Head of Department · Dean (Academics)</span>
+                            <h4 class="h3 mb-1">Dr. Archana M. Rajurkar</h4>
+                            <p class="text-muted-iei mb-3">
+                                Head, Department of Computer Science &amp; Engineering · Dean (Academics)
+                            </p>
+                            <p>
+                                Dr. Rajurkar leads the Department of Computer Science &amp; Engineering
+                                and oversees academic matters as Dean (Academics). The department
+                                provides the academic foundation upon which the IEI Student Chapter
+                                operates.
+                            </p>
+                            <a href="mailto:rajurkar_am@mgmce.ac.in" class="link-iei">
+                                <i class="bi bi-envelope" aria-hidden="true"></i>
+                                rajurkar_am@mgmce.ac.in
+                            </a>
+
+                            <!-- Department facts as compact counters -->
+                            <div class="department-facts">
+                                <div class="fact-tile">
+                                    <span class="fact-value">1984</span>
+                                    <span class="fact-label">Established</span>
+                                </div>
+                                <div class="fact-tile">
+                                    <span class="fact-value">20</span>
+                                    <span class="fact-label">Teaching Faculty</span>
+                                </div>
+                                <div class="fact-tile">
+                                    <span class="fact-value">10</span>
+                                    <span class="fact-label">Laboratories</span>
+                                </div>
+                                <div class="fact-tile">
+                                    <span class="fact-value">5</span>
+                                    <span class="fact-label">Classrooms</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8C — IEI Faculty In-Charges -->
+                <div class="leadership-block reveal">
+                    <h3 class="leadership-block-title">
+                        <i class="bi bi-person-badge" aria-hidden="true"></i>
+                        IEI Faculty In-Charges
+                    </h3>
+
+                    <div class="row g-4">
+
+                        <!-- Faculty 1 -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <article class="faculty-card">
+                                <div class="faculty-photo">
+                                    <img src="https://mgmcen.ac.in/resizeimagebb70.jpg?file=90,100,images/department/faculty/Department_3-20180807160420.jpg"
+                                         alt="Ms. Nitu L. Pariyal, IEI Faculty In-Charge"
+                                         loading="lazy"
+                                         decoding="async"
+                                         onerror="this.onerror=null; this.replaceWith(Object.assign(document.createElement('div'),{className:'faculty-photo-fallback',textContent:'NP'}));">
+                                </div>
+                                <h4 class="h5 mb-1">Ms. Nitu L. Pariyal</h4>
+                                <p class="faculty-role">IEI Faculty In-Charge</p>
+                                <p class="faculty-spec">Data Mining &amp; Data Warehousing</p>
+                                <!-- <ul class="faculty-meta">
+                                    <li><i class="bi bi-envelope" aria-hidden="true"></i><a href="mailto:pariyal_nitu@mgmcen.ac.in">pariyal_nitu@mgmcen.ac.in</a></li>
+                                    <li><i class="bi bi-telephone" aria-hidden="true"></i><a href="tel:+919860066540">+91 98600 66540</a></li>
+                                </ul> -->
+                                <button type="button"
+                                        class="btn-iei-outline btn-iei-sm w-100"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faculty1More"
+                                        aria-expanded="false"
+                                        aria-controls="faculty1More">
+                                    <i class="bi bi-person-lines-fill" aria-hidden="true"></i>
+                                    View Profile
+                                </button>
+                                <div class="collapse mt-3" id="faculty1More">
+                                    <div class="faculty-detail">
+                                        <h5 class="h6">Education</h5>
+                                        <ul>
+                                            <li>B.E. Computer Science &amp; Engineering — SRTMUN</li>
+                                            <li>M.E. Computer Science &amp; Engineering — SRTMUN</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- Faculty 2 -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <article class="faculty-card">
+                                <div class="faculty-photo">
+                                    <img src="https://mgmcen.ac.in/khan.jpg"
+                                         alt="Ms. Khan Musharraf Hina, Assistant Professor"
+                                         loading="lazy"
+                                         decoding="async"
+                                         onerror="this.onerror=null; this.replaceWith(Object.assign(document.createElement('div'),{className:'faculty-photo-fallback',textContent:'KH'}));">
+                                </div>
+                                <h4 class="h5 mb-1">Ms. Khan Musharraf Hina</h4>
+                                <p class="faculty-role">Assistant Professor · IEI Faculty In-Charge</p>
+                                <p class="faculty-spec">Business Intelligence &amp; Data Analytics</p>
+                                <button type="button"
+                                        class="btn-iei-outline btn-iei-sm w-100"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faculty2More"
+                                        aria-expanded="false"
+                                        aria-controls="faculty2More">
+                                    <i class="bi bi-person-lines-fill" aria-hidden="true"></i>
+                                    View Profile
+                                </button>
+                                <div class="collapse mt-3" id="faculty2More">
+                                    <div class="faculty-detail">
+                                        <h5 class="h6">Qualifications</h5>
+                                        <ul>
+                                            <li>M.E. Computer Science &amp; Engineering — MGM's College of Engineering, Nanded (2016)</li>
+                                            <li>B.E. Computer Science &amp; Engineering — MGM's College of Engineering, Nanded (2011)</li>
+                                        </ul>
+                                        <!-- <h5 class="h6 mt-3">Academic Involvement</h5>
+                                        <ul>
+                                            <li>Software Engineering</li>
+                                            <li>Discrete Mathematics</li>
+                                            <li>Database Management Systems</li>
+                                        </ul> -->
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- Faculty 3 -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <article class="faculty-card">
+                                <div class="faculty-photo">
+                                    <img src="https://mgmcen.ac.in/resizeimage3780.jpg?file=90,100,images/department/faculty/Department_3-20182906114121.jpg"
+                                         alt="Dr. Kapre Bhagyashri Sudhakar, Assistant Professor"
+                                         loading="lazy"
+                                         decoding="async"
+                                         onerror="this.onerror=null; this.replaceWith(Object.assign(document.createElement('div'),{className:'faculty-photo-fallback',textContent:'BK'}));">
+                                </div>
+                                <h4 class="h5 mb-1">Dr. Kapre Bhagyashri Sudhakar</h4>
+                                <p class="faculty-role">Assistant Professor · IEI Faculty In-Charge</p>
+                                <p class="faculty-spec">Computer Science &amp; Engineering</p>
+                                <!-- <ul class="faculty-meta">
+                                    <li><i class="bi bi-envelope" aria-hidden="true"></i><a href="mailto:kapre_bs@mgmcen.ac.in">kapre_bs@mgmcen.ac.in</a></li>
+                                    <li><i class="bi bi-telephone" aria-hidden="true"></i><a href="tel:+918087886510">+91 80878 86510</a></li>
+                                </ul> -->
+                                <button type="button"
+                                        class="btn-iei-outline btn-iei-sm w-100"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faculty3More"
+                                        aria-expanded="false"
+                                        aria-controls="faculty3More">
+                                    <i class="bi bi-person-lines-fill" aria-hidden="true"></i>
+                                    View Profile
+                                </button>
+                                <div class="collapse mt-3" id="faculty3More">
+                                    <div class="faculty-detail">
+                                        <h5 class="h6">Qualifications</h5>
+                                        <ul>
+                                            <li>Ph.D. in Computer Science &amp; Engineering — 2024</li>
+                                            <li>M.E. in Computer Science &amp; Engineering — 2010</li>
+                                            <li>B.E. in Computer Science &amp; Engineering — 2005</li>
+                                            <li>Diploma in Medical Electronics — 2002</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 9 — IEI STUDENT COUNCIL
+             ============================================================ -->
+        <section id="about-council" class="section section-tint about-council">
+            <div class="container-iei">
+                <div class="section-heading text-center reveal">
+                    <span class="eyebrow">Student Council</span>
+                    <h2>IEI Student Council</h2>
+                    <div class="divider"></div>
+                    <p>The students leading and operating the chapter.</p>
+                </div>
+
+                <!-- Featured leadership strip -->
+                <div id="councilFeatured" class="council-featured"></div>
+
+                <!-- Filter tabs -->
+                <div class="council-tabs" role="tablist" aria-label="Filter council members">
+                    <button type="button" class="council-tab is-active" data-council-filter="all" role="tab" aria-selected="true">All</button>
+                    <button type="button" class="council-tab" data-council-filter="leadership" role="tab" aria-selected="false">Leadership</button>
+                    <button type="button" class="council-tab" data-council-filter="technical" role="tab" aria-selected="false">Technical</button>
+                    <button type="button" class="council-tab" data-council-filter="media" role="tab" aria-selected="false">Media</button>
+                    <button type="button" class="council-tab" data-council-filter="magazine" role="tab" aria-selected="false">Magazine</button>
+                    <button type="button" class="council-tab" data-council-filter="board" role="tab" aria-selected="false">Board</button>
+                </div>
+
+                <!-- Members grid -->
+                <div id="councilGrid" class="row g-3" aria-live="polite"></div>
+
+                <p id="councilEmpty" class="text-center text-muted-iei mt-4 d-none">
+                    <i class="bi bi-info-circle" aria-hidden="true"></i>
+                    No members in this category.
+                </p>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 10 — IMPACT STATS
+             ============================================================ -->
+        <section class="section about-stats">
+            <div class="container-iei">
+                <div class="section-heading text-center reveal">
+                    <span class="eyebrow">Impact</span>
+                    <h2>Chapter at a Glance</h2>
+                    <div class="divider"></div>
+                    <p>Highlights of the IEI MGM Student Council and activities.</p>
+                </div>
+
+                <div class="row g-4 text-center">
+                    <div class="col-6 col-lg-3">
+                        <div class="stat-tile reveal">
+                            <i class="bi bi-people-fill stat-icon" aria-hidden="true"></i>
+                            <span class="stat-value">30</span>
+                            <span class="stat-label">Council Members</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="stat-tile reveal reveal-delay-1">
+                            <i class="bi bi-person-badge-fill stat-icon" aria-hidden="true"></i>
+                            <span class="stat-value">4</span>
+                            <span class="stat-label">Leadership Groups</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="stat-tile reveal reveal-delay-2">
+                            <i class="bi bi-mortarboard-fill stat-icon" aria-hidden="true"></i>
+                            <span class="stat-value">3</span>
+                            <span class="stat-label">Faculty In-Charges</span>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="stat-tile reveal reveal-delay-3">
+                            <i class="bi bi-calendar2-check stat-icon" aria-hidden="true"></i>
+                            <span class="stat-value">Ongoing</span>
+                            <span class="stat-label">Activities &amp; Events</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 11 — CTA
+             ============================================================ -->
+        <section class="section-sm">
+            <div class="container-iei">
+                <div class="cta-band reveal">
+                    <div class="cta-band-content">
+                        <span class="eyebrow" style="color:rgba(255,255,255,.85);">Join Us</span>
+                        <h2>Be Part of the Engineering Community</h2>
+                        <p>Learn, collaborate, build and grow with IEI MGM.</p>
+                    </div>
+                    <div class="cta-band-actions">
+                        <a href="projects.html" class="btn-iei">
+                            <i class="bi bi-grid" aria-hidden="true"></i>
+                            Explore Projects
+                        </a>
+                        <a href="ContactUs.html" class="btn-iei-outline">
+                            <i class="bi bi-send" aria-hidden="true"></i>
+                            Contact IEI MGM
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div data-include="includes/footer.html"></div>
+
+    <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top">
+        <i class="bi bi-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="assets/js/script.js" defer></script>
+</body>
+</html>
