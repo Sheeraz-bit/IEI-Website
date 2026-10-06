@@ -10,11 +10,97 @@
   /* --------------------------------------------------------
        0. Helpers
        -------------------------------------------------------- */
+  const IEI = (window.__IEI = window.__IEI || {});
   const qs = (sel, ctx = document) => ctx.querySelector(sel);
   const qsa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
+  IEI.qs = qs;
+  IEI.qsa = qsa;
+  IEI.prefersReducedMotion = () =>
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  IEI.escapeHtml = (str) =>
+    String(str ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  IEI.initialsFor = (name) =>
+    String(name || "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0].toUpperCase())
+      .join("");
+  IEI.formatDate = (iso) => {
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return iso;
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  };
+  IEI.getDeveloper = (project) => {
+    const developer = project.developer;
+    if (typeof developer === "string") {
+      return {
+        name: developer,
+        role: project.developerRole || "",
+        department: "",
+        photo: "",
+        email: "",
+        phone: "",
+        github: project.githubUrl && project.githubUrl !== "#" ? project.githubUrl : "",
+        linkedin: "",
+        skills: [],
+      };
+    }
+    if (developer && typeof developer === "object") {
+      return {
+        name: developer.name || "",
+        role: developer.role || project.developerRole || "",
+        department: developer.department || "",
+        photo: developer.photo || "",
+        email: developer.email || "",
+        phone: developer.phone || "",
+        github: developer.github || "",
+        linkedin: developer.linkedin || "",
+        skills: Array.isArray(developer.skills) ? developer.skills : [],
+      };
+    }
+    return {
+      name: "",
+      role: project.developerRole || "",
+      department: "",
+      photo: "",
+      email: "",
+      phone: "",
+      github: "",
+      linkedin: "",
+      skills: [],
+    };
+  };
+  IEI.observeReveals = () => {
+    const nodes = qsa(".reveal:not(.is-visible)");
+    if (!nodes.length) return;
+    if (IEI.prefersReducedMotion() || !("IntersectionObserver" in window)) {
+      nodes.forEach((node) => node.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    );
+    nodes.forEach((node) => observer.observe(node));
+  };
+  const prefersReducedMotion = IEI.prefersReducedMotion();
 
   const loadIncludes = async () => {
     const placeholders = qsa("[data-include]");
@@ -89,10 +175,14 @@
     });
 
     // Auto-close on resize to desktop
-    window.addEventListener("resize", () => {
-      if (window.innerWidth >= 992 && sidebar.classList.contains("is-open"))
-        close();
-    });
+    window.addEventListener(
+      "resize",
+      () => {
+        if (window.innerWidth >= 992 && sidebar.classList.contains("is-open"))
+          close();
+      },
+      { passive: true },
+    );
 
     // Close when a nav link is clicked
     qsa("a", sidebar).forEach((a) =>
@@ -373,6 +463,8 @@
 (() => {
   "use strict";
 
+  const IEI = window.__IEI;
+
   const getProjectOptions = () =>
     Array.isArray(window.IEI_PROJECTS)
       ? window.IEI_PROJECTS.map((project) => ({
@@ -611,7 +703,9 @@
 
     /* --- Auto-select type from URL (?source=hire) ----------- */
     if (source) {
-      const radio = form.querySelector(`input[name="enquiry"][value="${source}"]`);
+      const radio = Array.from(
+        form.querySelectorAll('input[name="enquiry"]'),
+      ).find((input) => input.value === source);
       if (radio) {
         radio.checked = true;
         showForm(source);
@@ -619,8 +713,7 @@
     }
   };
 
-  const prefersReducedMotion = () =>
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReducedMotion = IEI.prefersReducedMotion;
 
   /* --------------------------------------------------------
      Boot — after includes are loaded (so header/footer exist)
@@ -629,7 +722,17 @@
     if (Array.isArray(window.IEI_PROJECTS)) {
       initContactForm();
     } else {
-      document.addEventListener("iei:projects-ready", initContactForm, { once: true });
+      let initialized = false;
+      const initializeOnce = () => {
+        if (initialized) return;
+        initialized = true;
+        clearTimeout(fallbackTimer);
+        initContactForm();
+      };
+      const fallbackTimer = setTimeout(initializeOnce, 500);
+      document.addEventListener("iei:projects-ready", initializeOnce, {
+        once: true,
+      });
     }
   };
 
@@ -649,6 +752,8 @@
 
 (() => {
   "use strict";
+
+  const IEI = window.__IEI;
 
   /* --------------------------------------------------------
      1. STATIC PROJECT DATA
@@ -803,13 +908,7 @@
   /* --------------------------------------------------------
      3. HELPERS
      -------------------------------------------------------- */
-  const escapeHtml = (str) =>
-    String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
+  const escapeHtml = IEI.escapeHtml;
 
   const categoryLabelFor = (value) => {
     if (value === "all") return "All";
@@ -817,33 +916,13 @@
     return found ? found.categoryLabel : value;
   };
 
-  const initialsFor = (name) =>
-    String(name || "")
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((n) => n[0].toUpperCase())
-      .join("");
+  const initialsFor = IEI.initialsFor;
 
-  const developerNameFor = (project) =>
-    typeof project.developer === "string"
-      ? project.developer
-      : project.developer?.name || "";
+  const developerNameFor = (project) => IEI.getDeveloper(project).name;
 
-  const developerRoleFor = (project) =>
-    project.developerRole ||
-    (typeof project.developer === "object" ? project.developer?.role : "") ||
-    "";
+  const developerRoleFor = (project) => IEI.getDeveloper(project).role;
 
-  const formatDate = (iso) => {
-    const d = new Date(iso);
-    if (Number.isNaN(d.getTime())) return iso;
-    return d.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric"
-    });
-  };
+  const formatDate = IEI.formatDate;
 
   /* --------------------------------------------------------
      4. FILTER + SORT PIPELINE
@@ -1135,10 +1214,19 @@
 
     /* Keyboard shortcut: "/" focuses search */
     document.addEventListener("keydown", (e) => {
-      if (e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || "")) {
-        e.preventDefault();
-        els.search?.focus();
+      const target = e.target;
+      if (
+        e.key !== "/" ||
+        (target instanceof HTMLElement &&
+          target.matches("input, textarea, select")) ||
+        /^(INPUT|TEXTAREA|SELECT)$/.test(
+          document.activeElement?.tagName || "",
+        )
+      ) {
+        return;
       }
+      e.preventDefault();
+      els.search?.focus();
     });
 
     /* Initial paint */
@@ -1166,17 +1254,13 @@
 (() => {
   "use strict";
 
+  const IEI = window.__IEI;
+
   /* --------------------------------------------------------
      Helpers
      -------------------------------------------------------- */
-  const qs = (sel, ctx = document) => ctx.querySelector(sel);
-  const escapeHtml = (str) =>
-    String(str ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
+  const qs = IEI.qs;
+  const escapeHtml = IEI.escapeHtml;
 
   const paraHtml = (text) =>
     escapeHtml(text)
@@ -1184,23 +1268,8 @@
       .map((paragraph) => `<p>${paragraph.replace(/\n/g, "<br>")}</p>`)
       .join("");
 
-  const initialsFor = (name) =>
-    String(name || "")
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((n) => n[0].toUpperCase())
-      .join("");
-
-  const formatDate = (iso) => {
-    const d = new Date(iso);
-    if (Number.isNaN(d.getTime())) return iso;
-    return d.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric"
-    });
-  };
+  const initialsFor = IEI.initialsFor;
+  const formatDate = IEI.formatDate;
 
   /* --------------------------------------------------------
      Fallback schema normalizer
@@ -1668,25 +1737,14 @@
 (() => {
   "use strict";
 
+  const IEI = window.__IEI;
+
   /* --------------------------------------------------------
      Helper
      -------------------------------------------------------- */
-  const qs = (sel, ctx = document) => ctx.querySelector(sel);
-  const escapeHtml = (str) =>
-    String(str ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-
-  const initialsFor = (name) =>
-    String(name || "")
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((n) => n[0].toUpperCase())
-      .join("");
+  const qs = IEI.qs;
+  const escapeHtml = IEI.escapeHtml;
+  const initialsFor = IEI.initialsFor;
 
   /* ============================================================
      SECTION 4 — EVENTS DATA (placeholder-friendly)
@@ -2020,32 +2078,7 @@
     });
 
     /* ---- Reusable reveal observer for dynamically-injected items ---- */
-    const reobserveReveals = () => {
-      const nodes = document.querySelectorAll(".reveal:not(.is-visible)");
-      if (!nodes.length) return;
-
-      const prefersReduced =
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (prefersReduced || !("IntersectionObserver" in window)) {
-        nodes.forEach((el) => el.classList.add("is-visible"));
-        return;
-      }
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
-      );
-
-      nodes.forEach((el) => observer.observe(el));
-    };
+    const reobserveReveals = IEI.observeReveals;
 
     document.addEventListener("about:render", reobserveReveals);
     reobserveReveals();
@@ -2067,29 +2100,11 @@
 (() => {
   "use strict";
 
-  const escapeHtml = (str) =>
-    String(str ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-
-  const initialsFor = (name) =>
-    String(name || "")
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((n) => n[0].toUpperCase())
-      .join("");
-
-  const developerName = (p) =>
-    typeof p.developer === "string" ? p.developer : p.developer?.name || "";
-
-  const developerRole = (p) =>
-    p.developerRole ||
-    (typeof p.developer === "object" ? p.developer?.role : "") ||
-    "";
+  const IEI = window.__IEI;
+  const escapeHtml = IEI.escapeHtml;
+  const initialsFor = IEI.initialsFor;
+  const developerName = (project) => IEI.getDeveloper(project).name;
+  const developerRole = (project) => IEI.getDeveloper(project).role;
 
   const FEATURED_COUNT = 6;
 
@@ -2173,8 +2188,7 @@
     const counters = document.querySelectorAll(".home-stat [data-count]");
     if (!counters.length) return;
 
-    const prefersReduced =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduced = IEI.prefersReducedMotion();
 
     const runCounter = (el) => {
       const target = parseInt(el.getAttribute("data-count"), 10);
@@ -2219,32 +2233,7 @@
   };
 
   /* ---- Local reveal observer for dynamically injected items ---- */
-  const reobserveReveals = () => {
-    const nodes = document.querySelectorAll(".reveal:not(.is-visible)");
-    if (!nodes.length) return;
-
-    const prefersReduced =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReduced || !("IntersectionObserver" in window)) {
-      nodes.forEach((el) => el.classList.add("is-visible"));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
-    );
-
-    nodes.forEach((el) => observer.observe(el));
-  };
+  const reobserveReveals = IEI.observeReveals;
 
   const initHomePage = () => {
     if (!document.getElementById("homeProjectsGrid")) return;
