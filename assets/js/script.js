@@ -1985,9 +1985,7 @@
      ============================================================ */
   const FEATURED_ROLES = [
     "President I",
-    "Vice-President I",
-    "Vice-President II",
-    "Secretary I"
+    "President II"
   ];
 
   const renderCouncilFeatured = () => {
