@@ -1758,7 +1758,7 @@
       date: "April 2026",
       description:
         "A 24-hour national-level hackathon organised with the Department of CSE & AIML and GDG, where teams built real-world solutions under a strict time window.",
-      image: "assets/images/events/hackspectra.jpg",
+      image: "assets/images/events/675bc050-b80d-48ed-b35e-b8f13c92a925.jpg",
       href: "#"
     },
     {
@@ -1769,7 +1769,7 @@
       date: "October 2025",
       description:
         "An expert talk by Mr. Atul Kahate on the evolution of Machine Learning, AI agents, and intelligent systems — with real-world industry examples.",
-      image: "assets/images/events/ai-agents-talk.jpg",
+      image: "assets/images/events/f179e9de-109c-45d8-a29e-da33e9599f75.jpg",
       href: "#"
     },
     {
@@ -1780,7 +1780,7 @@
       date: "September 2026",
       description:
         "A hands-on session by Mr. Mukesh Jain (Capgemini) covering data, analytics, preprocessing, model deployment, and the practical aspects of AI/ML.",
-      image: "assets/images/events/hands-on-workshop.jpg",
+      image: "assets/images/events/fb124c99-aa74-4162-bfac-e80575dff085.jpg",
       href: "#"
     },
     {
@@ -1791,7 +1791,7 @@
       date: "October 2025",
       description:
         "Formal inauguration of the IEI Students' Chapter at the Department of CSE — combined with Engineer's Day Celebration and a Digital Poster Making Competition.",
-      image: "assets/images/events/chapter-inauguration.jpg",
+      image: "assets/images/events/2c4ce29e-6358-4b1e-9c72-cff57c18f108.jpg",
       href: "#"
     },
     {
@@ -1802,7 +1802,7 @@
       date: "March 2026",
       description:
         "An expert lecture by DRDO scientist Shri Kashinath Devdhar on India's defence technology journey, indigenous systems, and self-reliance.",
-      image: "assets/images/events/defence-lecture.jpg",
+      image: "assets/images/events/55c9c81b-f019-45e4-aef3-ea453f6ef3ef.jpg",
       href: "#"
     },
     {
@@ -1813,7 +1813,7 @@
       date: "November 2025",
       description:
         "A one-day workshop on AI fundamentals, agentic architectures, and building real AI applications — with industry experts from Infinera and IIT Bombay.",
-      image: "assets/images/events/agentic-ai.jpg",
+      image: "assets/images/events/52585193-2ae3-497a-98da-04b22e74a2e7.jpg",
       href: "#"
     }
   ];

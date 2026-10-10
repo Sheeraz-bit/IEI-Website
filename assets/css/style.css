@@ -2468,7 +2468,7 @@ body.sidebar-open { overflow: hidden; }
 
 .about-event-top {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 220px;
+    grid-template-columns: minmax(0, 1fr) 350px;
     gap: var(--space-5);
     align-items: start;
 }
@@ -2580,7 +2580,7 @@ body.sidebar-open { overflow: hidden; }
 
 @media (max-width: 991.98px) {
     .about-event-top {
-        grid-template-columns: minmax(0, 1fr) 180px;
+        grid-template-columns: minmax(0, 1fr) 240px;
         gap: var(--space-4);
     }
 }
