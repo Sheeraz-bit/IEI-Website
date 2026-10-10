@@ -1870,7 +1870,8 @@
      SECTION 9 — STUDENT COUNCIL DATA
      ============================================================ */
   const COUNCIL_MEMBERS = [
-    { name: "Vaishnavi Titare",       role: "President I",         cls: "B.Tech CSE-B", group: "leadership", rank: 1 },
+    // Add a photo URL to any member with photo: "https://example.com/photo.jpg".
+    { photo: "./assets/images/profilePicture/president-1.jpg", name: "Vaishnavi Titare",       role: "President I",         cls: "B.Tech CSE-B", group: "leadership", rank: 1 },
     { name: "Sushrut Deshpande",      role: "President II",        cls: "TY CSE-A",     group: "leadership", rank: 2 },
     { name: "Pranjal Shahane",        role: "Vice-President I",    cls: "B.Tech CSE-B", group: "leadership", rank: 1 },
     { name: "Shruti Daware",          role: "Vice-President II",   cls: "TY CSE-A",     group: "leadership", rank: 2 },
@@ -1880,7 +1881,7 @@
     { name: "Sayali Parkhi",          role: "Secretary III",       cls: "TY CSE-B",     group: "leadership", rank: 3 },
     { name: "Yogesh Tehare",          role: "Joint Secretary I",   cls: "TY CSE-C",     group: "leadership", rank: 1 },
     { name: "Yashvi Nathani",         role: "Joint Secretary II",  cls: "SY CSE-C",     group: "leadership", rank: 2 },
-    { name: "Shaikh Abdul Nabi Sheeraz",role: "Joint Secretary III", cls: "SY AIML",      group: "leadership", rank: 3 },
+    { photo: "./assets/images/profilePicture/PP-male.jpg", name: "Shaikh Abdul Nabi Sheeraz", role: "Joint Secretary III", cls: "SY AIML",      group: "leadership", rank: 3 },
     { name: "Anushka Swami",          role: "Treasurer I",         cls: "TY CSE-C",     group: "leadership", rank: 1 },
     { name: "Pranjali Shirpure",      role: "Treasurer II",        cls: "SY CSE-C",     group: "leadership", rank: 2 },
     { name: "Shreyash Tekale",        role: "Treasurer III",       cls: "TY CSE-C",     group: "leadership", rank: 3 },
@@ -2034,7 +2035,11 @@
 
     container.innerHTML = featured.map((m) => `
       <div class="featured-card reveal">
-        <div class="featured-card-photo" aria-hidden="true">${escapeHtml(initialsFor(m.name))}</div>
+        <div class="student-photo" aria-hidden="true">${
+            m.photo
+              ? `<img src="${escapeHtml(m.photo)}" alt="${escapeHtml(m.name)}" onerror="this.parentElement.textContent = this.alt">`
+              : `<span class="student-photo-fallback">${escapeHtml(initialsFor(m.name))}</span>`
+          }</div>
         <span class="featured-card-role">${escapeHtml(m.role)}</span>
         <h4>${escapeHtml(m.name)}</h4>
         <p class="featured-card-class">${escapeHtml(m.cls)}</p>
@@ -2063,7 +2068,11 @@
     grid.innerHTML = filtered.map((m, i) => `
       <div class="col-6 col-md-4 col-lg-3">
         <article class="student-card reveal reveal-delay-${i % 4}">
-          <div class="student-photo" aria-hidden="true">${escapeHtml(initialsFor(m.name))}</div>
+          <div class="student-photo" aria-hidden="true">${
+            m.photo
+              ? `<img src="${escapeHtml(m.photo)}" alt="${escapeHtml(m.name)}" onerror="this.parentElement.textContent = this.alt">`
+              : `<span class="student-photo-fallback">${escapeHtml(initialsFor(m.name))}</span>`
+          }</div>
           <p class="student-name">${escapeHtml(m.name)}</p>
           <p class="student-role">${escapeHtml(m.role)}</p>
           <p class="student-class">${escapeHtml(m.cls)}</p>
