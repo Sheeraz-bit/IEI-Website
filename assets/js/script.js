@@ -1754,6 +1754,7 @@
       id: "evt-1",
       title: "HackSpectra 2.0 — Metaverse: Code Beyond Reality",
       category: "Hackathon",
+      guest: "Judged by Mr. Deepak Sar, Mr. Devendra Gadekar, Mr. Amit Mirkale, Mr. Dhananjay Kharade, and Mr. Vinod Malode",
       date: "April 2026",
       description:
         "A 24-hour national-level hackathon organised with the Department of CSE & AIML and GDG, where teams built real-world solutions under a strict time window.",
@@ -1764,6 +1765,7 @@
       id: "evt-2",
       title: "Machine Learning to AI Agents",
       category: "Expert Talk",
+      guest: "Mr. Atul Kahate",
       date: "October 2025",
       description:
         "An expert talk by Mr. Atul Kahate on the evolution of Machine Learning, AI agents, and intelligent systems — with real-world industry examples.",
@@ -1774,6 +1776,7 @@
       id: "evt-3",
       title: "Expert Lecture & Hands-On Workshop",
       category: "Workshop",
+      guest: "Mr. Mukesh Jain, CTO & EVP at Capgemini",
       date: "September 2026",
       description:
         "A hands-on session by Mr. Mukesh Jain (Capgemini) covering data, analytics, preprocessing, model deployment, and the practical aspects of AI/ML.",
@@ -1784,6 +1787,7 @@
       id: "evt-4",
       title: "Inauguration of IEI Students' Chapter",
       category: "Chapter Milestone",
+      guest: "Prof. U. V. Kulkarni, Head of CSE, SGGS Nanded",
       date: "October 2025",
       description:
         "Formal inauguration of the IEI Students' Chapter at the Department of CSE — combined with Engineer's Day Celebration and a Digital Poster Making Competition.",
@@ -1794,6 +1798,7 @@
       id: "evt-5",
       title: "Inspiring Journey of India's Defence Preparedness",
       category: "Expert Lecture",
+      guest: "Shri Kashinath Damodar Devdhar, DRDO Scientist",
       date: "March 2026",
       description:
         "An expert lecture by DRDO scientist Shri Kashinath Devdhar on India's defence technology journey, indigenous systems, and self-reliance.",
@@ -1804,6 +1809,7 @@
       id: "evt-6",
       title: "Building Agentic AI Applications from Scratch",
       category: "Technical Session",
+      guest: "Mr. Atul Joshi (Infinera) & Mr. Rohan Chandak (IIT Bombay)",
       date: "November 2025",
       description:
         "A one-day workshop on AI fundamentals, agentic architectures, and building real AI applications — with industry experts from Infinera and IIT Bombay.",
@@ -1897,7 +1903,7 @@
   ];
 
   /* ============================================================
-     RENDER — EVENTS GRID
+     RENDER — EVENTS GRID (horizontal card layout)
      ============================================================ */
   const renderAboutEvents = () => {
     const grid = document.getElementById("aboutEventsGrid");
@@ -1909,30 +1915,60 @@
       return;
     }
 
-    grid.innerHTML = ABOUT_EVENTS.map((e, i) => `
-      <div class="col-12 col-md-6 col-lg-4">
-        <article class="about-event-card reveal reveal-delay-${i % 4}">
-          <div class="about-event-media">
-            <img src="${escapeHtml(e.image)}"
-                 alt="Preview of ${escapeHtml(e.title)}"
-                 loading="lazy"
-                 decoding="async"
-                 onerror="this.style.display='none'">
-            <span class="about-event-cat">${escapeHtml(e.category)}</span>
-          </div>
-          <div class="about-event-body">
-            <h3 class="about-event-title">${escapeHtml(e.title)}</h3>
-            <p class="about-event-desc">${escapeHtml(e.description)}</p>
-            <div class="about-event-meta">
-              <span><i class="bi bi-calendar-event" aria-hidden="true"></i> ${escapeHtml(e.date)}</span>
-              <a href="${escapeHtml(e.href)}" class="link-iei" aria-label="View details for ${escapeHtml(e.title)}">
+    grid.innerHTML = ABOUT_EVENTS.map((e, i) => {
+      const title = escapeHtml(e.title || "");
+      const guest = e.guest ? escapeHtml(e.guest) : "";
+      const description = escapeHtml(e.description || "");
+      const category = escapeHtml(e.category || "");
+      const date = escapeHtml(e.date || "");
+      const image = escapeHtml(e.image || "");
+      const href = escapeHtml(e.href || "#");
+
+      const guestRow = guest
+        ? `<p class="about-event-guest">
+             <i class="bi bi-person-badge" aria-hidden="true"></i>
+             <span><strong>Chief Guest:</strong> ${guest}</span>
+           </p>`
+        : "";
+
+      const imageCol = image
+        ? `<div class="about-event-thumb">
+             <img src="${image}"
+                  alt="Preview of ${title}"
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none'">
+           </div>`
+        : "";
+
+      return `
+        <div class="col-12">
+          <article class="about-event-card reveal reveal-delay-${i % 4}">
+            <div class="about-event-top">
+              <div class="about-event-text">
+                <div class="about-event-meta-row">
+                  <span class="about-event-cat">${category}</span>
+                  ${date ? `<span class="about-event-date">
+                    <i class="bi bi-calendar-event" aria-hidden="true"></i> ${date}
+                  </span>` : ""}
+                </div>
+                <h3 class="about-event-title">${title}</h3>
+                ${guestRow}
+              </div>
+              ${imageCol}
+            </div>
+
+            <p class="about-event-desc">${description}</p>
+
+            <div class="about-event-footer">
+              <a href="${href}" class="link-iei" aria-label="View details for ${title}">
                 Details <i class="bi bi-arrow-right" aria-hidden="true"></i>
               </a>
             </div>
-          </div>
-        </article>
-      </div>
-    `).join("");
+          </article>
+        </div>
+      `;
+    }).join("");
   };
 
   /* ============================================================
