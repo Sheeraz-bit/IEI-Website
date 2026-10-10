@@ -110,7 +110,7 @@
 
     /* Layout */
     --container-max: 1200px;
-    --header-height: 72px;
+    --header-height: 94px;
     --sidebar-width: 288px;
 
     /* Motion */
@@ -324,14 +324,47 @@ p { margin: 0 0 var(--space-4); }
 /* Brand */
 .brand {
     display: inline-flex;
+    flex: 1;
+    flex-direction: column;
     align-items: center;
-    gap: var(--space-3);
+    gap: 3px;
+    min-width: 0;
     text-decoration: none !important;
     color: var(--heading-color);
 }
+.brand-institution,
+.brand-chapter {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    max-width: 100%;
+    min-width: 0;
+}
+.brand-institution-logo {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    object-fit: contain;
+}
+.brand-institution-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    min-width: 0;
+}
+.brand-institution-name {
+    color: var(--heading-color);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+}
+.brand-institution-note {
+    color: var(--muted-color);
+    font-size: var(--fs-xs);
+}
 .brand-logo {
-    height: 44px;
-    width: auto;
+    height: 30px;
+    width: 30px;
+    flex: 0 0 30px;
     object-fit: contain;
 }
 .brand-text {
@@ -1014,9 +1047,9 @@ body.sidebar-open { overflow: hidden; }
    20. RESPONSIVE TUNING
    ------------------------------------------------------------ */
 @media (max-width: 991.98px) {
-    :root { --header-height: 64px; }
+    :root { --header-height: 94px; }
     .navbar-iei .nav-link.active::after { display: none; }
-    .site-header .navbar { min-height: 64px; }
+    .site-header .navbar { min-height: 94px; }
     .page-hero { padding-block: var(--space-8); }
 }
 
@@ -3574,9 +3607,12 @@ body.sidebar-open { overflow: hidden; }
     }
 
     /* Brand */
-    .brand-title    { font-size: var(--fs-sm); }
-    .brand-subtitle { font-size: 0.68rem; }
-    .brand-logo     { height: 38px; }
+    .brand-title    { font-size: 0.68rem; }
+    .brand-subtitle { font-size: 0.58rem; }
+    .brand-logo     { width: 26px; height: 26px; flex-basis: 26px; }
+    .brand-institution-logo { width: 30px; height: 30px; flex-basis: 30px; }
+    .brand-institution-name { font-size: 0.66rem; }
+    .brand-institution-note { font-size: 0.58rem; }
 
     /* Cards */
     .card-iei          { padding: var(--space-4); }
